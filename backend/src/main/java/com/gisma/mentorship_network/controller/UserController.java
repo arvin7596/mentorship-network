@@ -2,9 +2,9 @@ package com.gisma.mentorship_network.controller;
 
 import com.gisma.mentorship_network.model.User;
 import com.gisma.mentorship_network.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,5 +30,12 @@ public class UserController {
     @GetMapping("/mentees")
     public List<User> getMentees() {
         return userService.getMentees();
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable int id) {
+        return userService.getUserById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "User not found with id: " + id));
     }
 }
