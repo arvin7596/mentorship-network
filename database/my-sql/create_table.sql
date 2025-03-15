@@ -1,21 +1,21 @@
 CREATE TABLE Users (
-	id INT PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(50),
     birth_date DATE,
-    country VARCHAR(50),
-    city VARCHAR(50),
+    country VARCHAR(100),
+    city VARCHAR(100),
     is_mentor BOOLEAN,
-    is_mentee BOOLEAN DEFAULT TRUE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_active BOOLEAN DEFAULT TRUE
+    is_mentee BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT true
 );
 
 CREATE TABLE User_Skills (
-	id INT PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES Users(id),
 	skill_name VARCHAR(50),
@@ -24,7 +24,7 @@ CREATE TABLE User_Skills (
 
 
 CREATE TABLE Mentor_Availability (
- id INT PRIMARY KEY AUTO_INCREMENT,
+ id BIGINT PRIMARY KEY AUTO_INCREMENT,
  mentor_id INT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
  weekday ENUM('monday', 'tuesday','wednesday' , 'thursday' , 'friday' , 'saturday' , 'sunday'),
@@ -34,7 +34,7 @@ CREATE TABLE Mentor_Availability (
 
 
 CREATE TABLE Mentorship_Match(
-id INT PRIMARY KEY AUTO_INCREMENT,
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
 mentor_id INT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
  mentee_id INT,
@@ -47,7 +47,7 @@ mentor_id INT,
 );
 
 CREATE TABLE Mentorship_Session(
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
   mentorship_match_id INT,
   FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Match(id),
   status ENUM("pending", "accepted", "completed", "canceled"),
@@ -56,7 +56,7 @@ CREATE TABLE Mentorship_Session(
 ); 
 
 CREATE TABLE Session_Feedback (
-id INT PRIMARY KEY AUTO_INCREMENT,
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
 session_id INT,
 FOREIGN KEY (session_id) REFERENCES Mentorship_Session(id),
 mentee_feedback TEXT,
@@ -64,7 +64,7 @@ rate DECIMAL CHECK (rate >= 0 AND rate <= 10)
 );
 
 CREATE TABLE Posts(
-id INT PRIMARY KEY AUTO_INCREMENT,
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
 title varchar(100),
 description text,
 author_id INT,
