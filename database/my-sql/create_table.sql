@@ -49,7 +49,7 @@ mentor_id INT,
 CREATE TABLE Mentorship_Session(
   id INT PRIMARY KEY AUTO_INCREMENT,
   mentorship_match_id INT,
-  FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Network(id),
+  FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Match(id),
   status ENUM("pending", "accepted", "completed", "canceled"),
   scheduled_date DATETIME,
   mentor_notes TEXT
