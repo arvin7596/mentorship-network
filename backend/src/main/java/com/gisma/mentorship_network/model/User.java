@@ -19,14 +19,15 @@ public class User {
     private Boolean is_active;
     private Boolean is_mentee;
     private Boolean is_mentor;
-    private String location;
+    private String country;
+    private String city;
     private String phone;
     private Date created_at;
 
     public User() {
     }
 
-    public User(Integer id, String first_name, String last_name, String email, Date birth_date, Boolean is_active, Boolean is_mentee, Boolean is_mentor, String location, String phone, Date created_at) {
+    public User(Integer id, String first_name, String last_name, String email, Date birth_date, Boolean is_active, Boolean is_mentee, Boolean is_mentor, String country, String city, String phone, Date created_at) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -35,7 +36,8 @@ public class User {
         this.is_active = is_active;
         this.is_mentee = is_mentee;
         this.is_mentor = is_mentor;
-        this.location = location;
+        this.country = country;
+        this.city = city;
         this.phone = phone;
         this.created_at = created_at;
     }
@@ -112,12 +114,20 @@ public class User {
         this.is_mentor = is_mentor;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCountry() {
+        return country;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getPhone() {
@@ -140,12 +150,12 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(first_name, user.first_name) && Objects.equals(last_name, user.last_name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(birth_date, user.birth_date) && Objects.equals(is_active, user.is_active) && Objects.equals(is_mentee, user.is_mentee) && Objects.equals(is_mentor, user.is_mentor) && Objects.equals(location, user.location) && Objects.equals(phone, user.phone) && Objects.equals(created_at, user.created_at);
+        return Objects.equals(id, user.id) && Objects.equals(first_name, user.first_name) && Objects.equals(last_name, user.last_name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(birth_date, user.birth_date) && Objects.equals(is_active, user.is_active) && Objects.equals(is_mentee, user.is_mentee) && Objects.equals(is_mentor, user.is_mentor) && Objects.equals(country, user.country) && Objects.equals(city, user.city) && Objects.equals(phone, user.phone) && Objects.equals(created_at, user.created_at);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, first_name, last_name, email, password, birth_date, is_active, is_mentee, is_mentor, location, phone, created_at);
+        return Objects.hash(id, first_name, last_name, email, password, birth_date, is_active, is_mentee, is_mentor, country, city, phone, created_at);
     }
 
     @Override
@@ -160,7 +170,8 @@ public class User {
                 ", is_active=" + is_active +
                 ", is_mentee=" + is_mentee +
                 ", is_mentor=" + is_mentor +
-                ", location='" + location + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
                 ", phone='" + phone + '\'' +
                 ", created_at=" + created_at +
                 '}';
