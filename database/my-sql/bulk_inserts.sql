@@ -1,10 +1,10 @@
 -- Insert Users (Mentors & Mentees)
-INSERT INTO Users (first_name, last_name, email, password, phone, birth_date, location, is_mentor, is_mentee, is_active) VALUES
-('Alice', 'Johnson', 'alice.johnson@email.com', 'pass123', '+491234567890', '1990-05-15', 'Berlin', TRUE, FALSE, TRUE),
-('Bob', 'Smith', 'bob.smith@email.com', 'pass456', '+491234567891', '1995-08-22', 'Munich', FALSE, TRUE, TRUE),
-('Charlie', 'Brown', 'charlie.brown@email.com', 'pass789', '+491234567892', '1988-11-10', 'Hamburg', TRUE, FALSE, TRUE),
-('Diana', 'Miller', 'diana.miller@email.com', 'pass111', '+491234567893', '1992-07-30', 'Frankfurt', TRUE, FALSE, TRUE),
-('Eve', 'Davis', 'eve.davis@email.com', 'pass222', '+491234567894', '1998-02-17', 'Stuttgart', FALSE, TRUE, TRUE);
+INSERT INTO Users (first_name, last_name, email, password, phone, birth_date, country , city , is_mentor, is_mentee, is_active) VALUES
+('Alice', 'Johnson', 'alice.johnson@email.com', 'pass123', '+491234567890', '1990-05-15', 'Germany', 'Berlin', TRUE, FALSE, TRUE),
+('Bob', 'Smith', 'bob.smith@email.com', 'pass456', '+491234567891', '1995-08-22', 'Germany', 'Munich', FALSE, TRUE, TRUE),
+('Charlie', 'Brown', 'charlie.brown@email.com', 'pass789', '+491234567892', '1988-11-10', 'Germany', 'Hamburg', TRUE, FALSE, TRUE),
+('Diana', 'Miller', 'diana.miller@email.com', 'pass111', '+491234567893', '1992-07-30', 'Germany', 'Frankfurt', TRUE, FALSE, TRUE),
+('Eve', 'Davis', 'eve.davis@email.com', 'pass222', '+491234567894', '1998-02-17', 'Germany', 'Stuttgart', FALSE, TRUE, TRUE);
 
 -- Insert User Skills
 INSERT INTO User_Skills (user_id, skill_name, skill_level) VALUES

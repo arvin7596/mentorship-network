@@ -3,14 +3,15 @@ CREATE TABLE Users (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE,
-    password VARCHAR(255),
+    password VARCHAR(255) NOT NULL,
     phone VARCHAR(50),
     birth_date DATE,
-    location VARCHAR(50),
+    country VARCHAR(50),
+    city VARCHAR(50),
     is_mentor BOOLEAN,
-    is_mentee BOOLEAN,
+    is_mentee BOOLEAN DEFAULT TRUE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_active BOOLEAN 
+    is_active BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE User_Skills (
