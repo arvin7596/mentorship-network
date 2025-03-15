@@ -1,5 +1,5 @@
 CREATE TABLE Users (
-	user_id INT PRIMARY KEY AUTO_INCREMENT,
+	id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE,
@@ -10,13 +10,13 @@ CREATE TABLE Users (
     is_mentor BOOLEAN,
     is_mentee BOOLEAN,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_active BOOLEAN
+    is_active BOOLEAN 
 );
 
 CREATE TABLE User_Skills (
 	skill_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (user_id) REFERENCES Users(id),
 	skill_name VARCHAR(50),
     skill_level ENUM('beginner', 'intermediate','advanced')
 );
@@ -24,7 +24,7 @@ CREATE TABLE User_Skills (
 
 CREATE TABLE Mentor_Availability (
  mentor_id INT,
- FOREIGN KEY (mentor_id) REFERENCES Users(user_id),
+ FOREIGN KEY (mentor_id) REFERENCES Users(id),
  weekday ENUM('monday', 'tuesday','wednesday' , 'thursday' , 'friday' , 'saturday' , 'sunday'),
  start_time DATETIME,
  end_date DATETIME
@@ -34,9 +34,9 @@ CREATE TABLE Mentor_Availability (
 CREATE TABLE Mentorship_Match(
 match_id INT PRIMARY KEY AUTO_INCREMENT,
 mentor_id INT,
- FOREIGN KEY (mentor_id) REFERENCES Users(user_id),
+ FOREIGN KEY (mentor_id) REFERENCES Users(id),
  mentee_id INT,
- FOREIGN KEY (mentee_id) REFERENCES Users(user_id),
+ FOREIGN KEY (mentee_id) REFERENCES Users(id),
  topic VARCHAR(50),
  status ENUM('new', 'in progress','completed','canceled', 'on hold'),
  progress INT CHECK (progress >= 0 AND progress <= 100),
@@ -66,5 +66,5 @@ post_id INT PRIMARY KEY AUTO_INCREMENT,
 title varchar(100),
 description text,
 author_id INT,
-FOREIGN KEY (author_id) REFERENCES Users(user_id)
+FOREIGN KEY (author_id) REFERENCES Users(id)
 )
