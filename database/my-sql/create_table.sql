@@ -14,7 +14,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE User_Skills (
-	skill_id INT PRIMARY KEY AUTO_INCREMENT,
+	id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES Users(id),
 	skill_name VARCHAR(50),
@@ -23,6 +23,7 @@ CREATE TABLE User_Skills (
 
 
 CREATE TABLE Mentor_Availability (
+ id INT PRIMARY KEY AUTO_INCREMENT,
  mentor_id INT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
  weekday ENUM('monday', 'tuesday','wednesday' , 'thursday' , 'friday' , 'saturday' , 'sunday'),
@@ -32,7 +33,7 @@ CREATE TABLE Mentor_Availability (
 
 
 CREATE TABLE Mentorship_Match(
-match_id INT PRIMARY KEY AUTO_INCREMENT,
+id INT PRIMARY KEY AUTO_INCREMENT,
 mentor_id INT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
  mentee_id INT,
@@ -45,24 +46,24 @@ mentor_id INT,
 );
 
 CREATE TABLE Mentorship_Session(
-  session_id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT PRIMARY KEY AUTO_INCREMENT,
   mentorship_match_id INT,
-  FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Network(match_id),
+  FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Network(id),
   status ENUM("pending", "accepted", "completed", "canceled"),
   scheduled_date DATETIME,
   mentor_notes TEXT
 ); 
 
 CREATE TABLE Session_Feedback (
-feedback_id INT PRIMARY KEY AUTO_INCREMENT,
+id INT PRIMARY KEY AUTO_INCREMENT,
 session_id INT,
-FOREIGN KEY (session_id) REFERENCES Mentorship_Session(session_id),
+FOREIGN KEY (session_id) REFERENCES Mentorship_Session(id),
 mentee_feedback TEXT,
 rate DECIMAL CHECK (rate >= 0 AND rate <= 10)
 );
 
 CREATE TABLE Posts(
-post_id INT PRIMARY KEY AUTO_INCREMENT,
+id INT PRIMARY KEY AUTO_INCREMENT,
 title varchar(100),
 description text,
 author_id INT,
