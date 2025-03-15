@@ -1,4 +1,4 @@
-package com.gisma.mentorship_network.user;
+package com.gisma.mentorship_network.model;
 
 import jakarta.persistence.*;
 
