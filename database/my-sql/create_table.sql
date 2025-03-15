@@ -54,6 +54,17 @@ CREATE TABLE Mentorship_Session(
 ); 
 
 CREATE TABLE Session_Feedback (
-session_id,
+feedback_id INT PRIMARY KEY AUTO_INCREMENT,
+session_id INT,
 FOREIGN KEY (session_id) REFERENCES Mentorship_Session(session_id),
+mentee_feedback TEXT,
+rate DECIMAL CHECK (rate >= 0 AND rate <= 10)
 );
+
+CREATE TABLE Posts(
+post_id INT PRIMARY KEY AUTO_INCREMENT,
+title varchar(100),
+description text,
+author_id INT,
+FOREIGN KEY (author_id) REFERENCES Users(user_id)
+)
