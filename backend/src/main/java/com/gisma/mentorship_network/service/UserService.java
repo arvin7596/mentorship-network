@@ -5,6 +5,7 @@ import com.gisma.mentorship_network.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,4 +26,9 @@ public class UserService {
     public List<User> getMentees() {
         return userRepository.findMentees();
     }
+
+    public Optional<User> getUserById(int id) {
+        return userRepository.findById(id);
+    }
+
 }
