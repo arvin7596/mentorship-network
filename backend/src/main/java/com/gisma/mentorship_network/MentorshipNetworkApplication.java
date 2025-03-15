@@ -30,4 +30,14 @@ public class MentorshipNetworkApplication {
 		return userRepository
 				.findAll();
 	}
+
+	@GetMapping("mentors")
+	public List<User> getMentors() {
+		return userRepository.findMentors();
+	}
+
+	@GetMapping("mentees")
+	public List<User> getMentees() {
+		return userRepository.findMentees();
+	}
 }
