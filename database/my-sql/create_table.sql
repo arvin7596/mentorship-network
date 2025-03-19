@@ -19,7 +19,7 @@ CREATE TABLE User_Skills (
     user_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES Users(id),
 	skill_name VARCHAR(50),
-    skill_level ENUM('beginner', 'intermediate','advanced')
+    skill_level ENUM('BEGINNER', 'INTERMEDIATE','ADVANCED')
 );
 
 
@@ -27,7 +27,7 @@ CREATE TABLE Mentor_Availability (
  id BIGINT PRIMARY KEY AUTO_INCREMENT,
  mentor_id BIGINT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
- weekday ENUM('monday', 'tuesday','wednesday' , 'thursday' , 'friday' , 'saturday' , 'sunday'),
+ weekday ENUM('MONDAY', 'TUESDAY','WEDNESDAY' , 'THURSDAY' , 'FRIDAY' , 'SATURDAY' , 'SUNDAY'),
  start_time DATETIME,
  end_date DATETIME
 );

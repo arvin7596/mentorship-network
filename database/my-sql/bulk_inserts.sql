@@ -8,19 +8,19 @@ INSERT INTO Users (first_name, last_name, email, password, phone, birth_date, co
 
 -- Insert User Skills
 INSERT INTO User_Skills (user_id, skill_name, skill_level) VALUES
-(1, 'Java', 'advanced'),
-(1, 'SQL', 'intermediate'),
-(2, 'Python', 'advanced'),
-(2, 'Machine Learning', 'beginner'),
-(3, 'JavaScript', 'intermediate'),
-(4, 'Cloud Computing', 'advanced'),
-(5, 'Data Science', 'intermediate');
+(1, 'Java', 'ADVANCED'),
+(1, 'SQL', 'INTERMEDIATE'),
+(2, 'Python', 'ADVANCED'),
+(2, 'Machine Learning', 'BEGINNER'),
+(3, 'JavaScript', 'INTERMEDIATE'),
+(4, 'Cloud Computing', 'ADVANCED'),
+(5, 'Data Science', 'INTERMEDIATE');
 
 -- Insert Mentor Availability
 INSERT INTO Mentor_Availability (mentor_id, weekday, start_time, end_date) VALUES
-(1, 'monday', '2025-03-10 09:00:00', '2025-03-10 12:00:00'),
-(3, 'wednesday', '2025-03-12 14:00:00', '2025-03-12 17:00:00'),
-(4, 'friday', '2025-03-14 10:00:00', '2025-03-14 13:00:00');
+(1, 'MONDAY', '2025-03-10 09:00:00', '2025-03-10 12:00:00'),
+(3, 'WEDNESDAY', '2025-03-12 14:00:00', '2025-03-12 17:00:00'),
+(4, 'FRIDAY', '2025-03-14 10:00:00', '2025-03-14 13:00:00');
 
 -- Insert Mentorship Matches
 INSERT INTO Mentorship_Match (mentor_id, mentee_id, topic, status, progress, mentor_feedback, mentee_feedback) VALUES
