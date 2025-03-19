@@ -3,8 +3,8 @@ CREATE TABLE Users (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    phone VARCHAR(50),
+    password VARCHAR(64) NOT NULL,
+    phone VARCHAR(20),
     birth_date DATE,
     country VARCHAR(100),
     city VARCHAR(100),
@@ -16,7 +16,7 @@ CREATE TABLE Users (
 
 CREATE TABLE User_Skills (
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
+    user_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES Users(id),
 	skill_name VARCHAR(50),
     skill_level ENUM('beginner', 'intermediate','advanced')
@@ -25,7 +25,7 @@ CREATE TABLE User_Skills (
 
 CREATE TABLE Mentor_Availability (
  id BIGINT PRIMARY KEY AUTO_INCREMENT,
- mentor_id INT,
+ mentor_id BIGINT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
  weekday ENUM('monday', 'tuesday','wednesday' , 'thursday' , 'friday' , 'saturday' , 'sunday'),
  start_time DATETIME,
@@ -35,9 +35,9 @@ CREATE TABLE Mentor_Availability (
 
 CREATE TABLE Mentorship_Match(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
-mentor_id INT,
+mentor_id BIGINT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
- mentee_id INT,
+ mentee_id BIGINT,
  FOREIGN KEY (mentee_id) REFERENCES Users(id),
  topic VARCHAR(50),
  status ENUM('new', 'in progress','completed','canceled', 'on hold'),
@@ -48,7 +48,7 @@ mentor_id INT,
 
 CREATE TABLE Mentorship_Session(
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  mentorship_match_id INT,
+  mentorship_match_id BIGINT,
   FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Match(id),
   status ENUM("pending", "accepted", "completed", "canceled"),
   scheduled_date DATETIME,
@@ -57,7 +57,7 @@ CREATE TABLE Mentorship_Session(
 
 CREATE TABLE Session_Feedback (
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
-session_id INT,
+session_id BIGINT,
 FOREIGN KEY (session_id) REFERENCES Mentorship_Session(id),
 mentee_feedback TEXT,
 rate DECIMAL CHECK (rate >= 0 AND rate <= 10)
@@ -67,6 +67,6 @@ CREATE TABLE Posts(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
 title varchar(100),
 description text,
-author_id INT,
+author_id BIGINT,
 FOREIGN KEY (author_id) REFERENCES Users(id)
 )
