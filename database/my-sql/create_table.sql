@@ -40,8 +40,8 @@ mentor_id BIGINT,
  mentee_id BIGINT,
  FOREIGN KEY (mentee_id) REFERENCES Users(id),
  topic VARCHAR(50),
- status ENUM('new', 'in progress','completed','canceled', 'on hold'),
- progress INT CHECK (progress >= 0 AND progress <= 100),
+ status ENUM('NEW', 'IN PROGRESS','COMPLETED','CANCELED', 'ON HOLD') DEFAULT 'NEW',
+ progress INT CHECK (progress >= 0 AND progress <= 100) DEFAULT 0,
  mentor_feedback TEXT,
  mentee_feedback TEXT
 );
@@ -50,7 +50,7 @@ CREATE TABLE Mentorship_Session(
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   mentorship_match_id BIGINT,
   FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Match(id),
-  status ENUM("pending", "accepted", "completed", "canceled"),
+  status ENUM("PENDING", "ACCEPTED", "COMPLETED", "CANCELED") DEFAULT 'ACCEPTED',
   scheduled_date DATETIME,
   mentor_notes TEXT
 ); 
