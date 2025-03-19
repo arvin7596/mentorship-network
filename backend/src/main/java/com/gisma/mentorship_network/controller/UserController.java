@@ -37,12 +37,24 @@ public class UserController {
     public User getUserById(@PathVariable int id) {
         return userService.getUserById(id)
                 .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "User not found with id: " + id));
+                        HttpStatus.NOT_FOUND, "User with ID " + id + " not found."));
     }
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody UserService.CreateUserRequest request) {
         User createdUser = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody UserService.UpdateUserRequest request) {
+        User updatedUser = userService.updateUser(id, request);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable("id") Integer id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

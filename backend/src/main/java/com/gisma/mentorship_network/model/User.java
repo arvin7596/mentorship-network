@@ -2,6 +2,7 @@ package com.gisma.mentorship_network.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,12 +23,12 @@ public class User {
     private String country;
     private String city;
     private String phone;
-    private Date created_at;
+    private LocalDateTime created_at;
 
     public User() {
     }
 
-    public User(Integer id, String first_name, String last_name, String email, Date birth_date, Boolean is_active, Boolean is_mentee, Boolean is_mentor, String country, String city, String phone, Date created_at) {
+    public User(Integer id, String first_name, String last_name, String email, Date birth_date, Boolean is_active, Boolean is_mentee, Boolean is_mentor, String country, String city, String phone, LocalDateTime created_at) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -138,11 +139,11 @@ public class User {
         this.phone = phone;
     }
 
-    public Date getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 

@@ -1,18 +1,26 @@
 package com.gisma.mentorship_network;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 @ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
+    public record ErrorResponse(
+        String message,
+        String status
+    ) {}
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception e) {
-        // Log the error
-//        logger.error("Unexpected error: ", e);
-        return new ResponseEntity<>("An error occurred: " + e.getMessage(),
-                HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorResponse> handleResponseStatusException(ResponseStatusException ex) {
+        ErrorResponse error = new ErrorResponse(
+            ex.getReason(),
+            ex.getStatusCode().toString()
+        );
+        return new ResponseEntity<>(error, ex.getStatusCode());
     }
+    
 }
