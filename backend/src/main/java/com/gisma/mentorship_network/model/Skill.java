@@ -1,6 +1,8 @@
 package com.gisma.mentorship_network.model;
 import jakarta.persistence.*;
 import java.util.Objects;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 
 @Entity
 @Table(name = "User_Skills")

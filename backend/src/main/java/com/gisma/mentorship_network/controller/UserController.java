@@ -1,6 +1,8 @@
 package com.gisma.mentorship_network.controller;
 
+import com.gisma.mentorship_network.model.Skill;
 import com.gisma.mentorship_network.model.User;
+import com.gisma.mentorship_network.service.SkillService;
 import com.gisma.mentorship_network.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +15,11 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+    private final SkillService skillService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SkillService skillService) {
         this.userService = userService;
+        this.skillService = skillService;
     }
 
     @GetMapping
@@ -56,5 +60,10 @@ public class UserController {
     public ResponseEntity<Void> deleteCustomer(@PathVariable("id") Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{userId}/skills")
+    public List<Skill> getUserSkills(@PathVariable Long userId) {
+        return skillService.getAllUserSkills(userId);
     }
 }
