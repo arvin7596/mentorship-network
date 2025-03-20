@@ -4,3 +4,5 @@ CALL CreateMentorshipMatch(2, 5, 'Data Science'); -- (mentor_id, mentee_id, topi
 CALL ScheduleMentorshipSession(3, '2025-04-01 14:00:00'); -- (mentorship_match_id, scheduled_date)
 CALL UpdateSessionStatus(1, 'completed'); -- (match_id , session_status) 
 CALL AddSessionFeedback(1, 'The session was very helpful!', 9.5); -- (session_id, mentee_feedback, rate)
+
+CALL AssignMenteeToMentor(1, 5, 'Java script', '2025-04-01 15:00:00'); 
