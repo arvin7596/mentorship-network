@@ -13,5 +13,7 @@ public interface SkillRepository
 
     @Query("SELECT s FROM Skill s WHERE s.user_id = :userId")
     List<Skill> getUserSkills(@Param("userId") Long userId);
+
+    boolean existsByNameAndUser(String name, Long userId);
 }
 
