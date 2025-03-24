@@ -1,5 +1,5 @@
 # Maven target directory
-/target/
+backend/target/ 
 
 # IntelliJ IDEA project files
 /.idea/
