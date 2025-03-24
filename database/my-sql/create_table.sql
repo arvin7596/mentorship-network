@@ -28,8 +28,8 @@ CREATE TABLE Mentor_Availability (
  mentor_id BIGINT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
  weekday ENUM('MONDAY', 'TUESDAY','WEDNESDAY' , 'THURSDAY' , 'FRIDAY' , 'SATURDAY' , 'SUNDAY'),
- start_time DATETIME,
- end_date DATETIME
+ start_time TIME,
+ end_time TIME
 );
 
 
