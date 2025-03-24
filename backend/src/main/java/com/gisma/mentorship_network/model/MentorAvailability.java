@@ -2,7 +2,7 @@ package com.gisma.mentorship_network.model;
 
 import jakarta.persistence.*;
 
-import java.security.Timestamp;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
@@ -12,21 +12,28 @@ public class MentorAvailability
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long mentor_id;
-    private Timestamp startDate;
-    private Timestamp endDate;
+
+    @Column(name = "mentor_id")  
+    private Long mentorId;
+    
+    @Column(name = "start_time")
+    private LocalTime startTime;
+    
+    @Column(name = "end_time")
+    private LocalTime endTime;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "week_day")
-    private WeekDay weekDay;
+    @Column(name = "weekday")
+    private WeekDay weekday;
 
     public MentorAvailability(){}
 
-    public MentorAvailability(Long id, Long mentor_id, Timestamp startDate, Timestamp endDate, WeekDay weekDay) {
+    public MentorAvailability(Long id, Long mentor_id, LocalTime startTime, LocalTime endTime, WeekDay weekday) {
         this.id = id;
-        this.mentor_id = mentor_id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.weekDay = weekDay;
+        this.mentorId = mentor_id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.weekday = weekday;
     }
 
     public Long getId() {
@@ -38,57 +45,57 @@ public class MentorAvailability
     }
 
     public Long getMentor_id() {
-        return mentor_id;
+        return mentorId;
     }
 
     public void setMentor_id(Long mentor_id) {
-        this.mentor_id = mentor_id;
+        this.mentorId = mentor_id;
     }
 
-    public Timestamp getStartDate() {
-        return startDate;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    public Timestamp getEndDate() {
-        return endDate;
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
-    public WeekDay getWeekDay() {
-        return weekDay;
+    public WeekDay getWeekday() {
+        return weekday;
     }
 
-    public void setWeekDay(WeekDay weekDay) {
-        this.weekDay = weekDay;
+    public void setWeekday(WeekDay weekday) {
+        this.weekday = weekday;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         MentorAvailability that = (MentorAvailability) o;
-        return Objects.equals(id, that.id) && Objects.equals(mentor_id, that.mentor_id) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && weekDay == that.weekDay;
+        return Objects.equals(id, that.id) && Objects.equals(mentorId, that.mentorId) && Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && weekday == that.weekday;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, mentor_id, startDate, endDate, weekDay);
+        return Objects.hash(id, mentorId, startTime, endTime, weekday);
     }
 
     @Override
     public String toString() {
         return "MentorAvailability{" +
                 "id=" + id +
-                ", mentor_id=" + mentor_id +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", weekDay=" + weekDay +
+                ", mentor_id=" + mentorId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", weekday=" + weekday +
                 '}';
     }
 }

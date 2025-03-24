@@ -15,6 +15,20 @@
           }
         },
         {
+          "name": "Get All Mentors",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/users/mentors"
+          }
+        },
+        {
+          "name": "Get All Mentees",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/users/mentees"
+          }
+        },
+        {
           "name": "Get User by ID",
           "request": {
             "method": "GET",
@@ -59,29 +73,170 @@
             "method": "DELETE",
             "url": "http://localhost:8080/api/users/1"
           }
-        }
-      ]
-    },
-    {
-      "name": "Mentors",
-      "item": [
+        },
         {
-          "name": "Get All Mentors",
+          "name": "Get User Skills",
           "request": {
             "method": "GET",
-            "url": "http://localhost:8080/api/users/mentors"
+            "url": "http://localhost:8080/api/users/1/skills"
           }
         }
       ]
     },
     {
-      "name": "Mentees",
+      "name": "Mentor Availabilities",
       "item": [
         {
-          "name": "Get All Mentees",
+          "name": "Get All Availabilities",
           "request": {
             "method": "GET",
-            "url": "http://localhost:8080/api/users/mentees"
+            "url": "http://localhost:8080/api/availabilities"
+          }
+        },
+        {
+          "name": "Get Availabilities by Mentor ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/availabilities/1"
+          }
+        },
+        {
+          "name": "Get Availabilities by Weekday",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/availabilities/weekday/MONDAY"
+          }
+        },
+        {
+          "name": "Get Available Time Slots",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/availabilities/1/time-slots"
+          }
+        },
+        {
+          "name": "Create Availabilities",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/availabilities",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n        \"weekday\": \"MONDAY\",\n        \"startTime\": \"10:00:00\",\n        \"endTime\": \"12:00:00\"\n    },\n    {\n        \"weekday\": \"WEDNESDAY\",\n        \"startTime\": \"14:00:00\",\n        \"endTime\": \"16:00:00\"\n    }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Availability",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:8080/api/availabilities/1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"weekday\": \"MONDAY\",\n    \"startTime\": \"11:00:00\",\n    \"endTime\": \"13:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Availability",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/api/availabilities/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Get All Posts",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/posts"
+          }
+        },
+        {
+          "name": "Get Post by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/posts/1"
+          }
+        },
+        {
+          "name": "Create Post",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/posts",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Sample Post\",\n    \"content\": \"This is a sample post content\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Post",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:8080/api/posts/1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Post\",\n    \"content\": \"This is updated content\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/api/posts/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Skills",
+      "item": [
+        {
+          "name": "Get All User Skills",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/skills"
+          }
+        },
+        {
+          "name": "Create Skill",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/skills",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"userId\": 1,\n    \"skillName\": \"Java\",\n    \"skillLevel\": \"INTERMEDIATE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         }
       ]

@@ -17,10 +17,10 @@ INSERT INTO User_Skills (user_id, name, level) VALUES
 (5, 'Data Science', 'INTERMEDIATE');
 
 -- Insert Mentor Availability
-INSERT INTO Mentor_Availability (mentor_id, weekday, start_time, end_date) VALUES
-(1, 'MONDAY', '2025-03-10 09:00:00', '2025-03-10 12:00:00'),
-(3, 'WEDNESDAY', '2025-03-12 14:00:00', '2025-03-12 17:00:00'),
-(4, 'FRIDAY', '2025-03-14 10:00:00', '2025-03-14 13:00:00');
+INSERT INTO Mentor_Availability (mentor_id, weekday, start_time, end_time) VALUES
+(1, 'MONDAY', '09:00:00', '12:00:00'),
+(3, 'WEDNESDAY', '14:00:00', '17:00:00'),
+(4, 'FRIDAY', '10:00:00', '13:30:00');
 
 -- Insert Mentorship Matches
 INSERT INTO Mentorship_Match (mentor_id, mentee_id, topic, status, progress, mentor_feedback, mentee_feedback) VALUES
