@@ -12,15 +12,15 @@ public class Post {
     private Long id;
     private String title;
     private String description;
-    private Long user_id;
+    private Long author_id;
 
     public Post() {}
 
-    public Post(Long id, String title, String description, Long user_id) {
+    public Post(Long id, String title, String description, Long author_id) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.user_id = user_id;
+        this.author_id = author_id;
     }
 
     public Long getId() {
@@ -47,24 +47,24 @@ public class Post {
         this.description = description;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getAuthor_id() {
+        return author_id;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setAuthor_id(Long author_id) {
+        this.author_id = author_id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(description, post.description) && Objects.equals(user_id, post.user_id);
+        return Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(description, post.description) && Objects.equals(author_id, post.author_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, user_id);
+        return Objects.hash(id, title, description, author_id);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Post {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", user_id=" + user_id +
+                ", author_id=" + author_id +
                 '}';
     }
 }
