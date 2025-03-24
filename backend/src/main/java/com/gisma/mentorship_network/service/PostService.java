@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.gisma.mentorship_network.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -38,16 +39,16 @@ public class PostService {
 
         String description,
         @NotNull(message = "User ID is required")
-        Long user_id) {}
+        Long author_id) {}
     public Post createPost(CreatePostRequest request) {
-        if (!userRepository.existsById(request.user_id())) {
+        if (!userRepository.existsById(request.author_id())) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "User with ID " +  request.user_id + " not found.");
+                    HttpStatus.NOT_FOUND, "User with ID " +  request.author_id + " not found.");
         }
         Post newPost = new Post();
         newPost.setTitle(request.title());
         newPost.setDescription(request.description());
-        newPost.setUser_id(request.user_id());
+        newPost.setAuthor_id(request.author_id());
         return postRepository.save(newPost);
     }
 
@@ -58,9 +59,13 @@ public class PostService {
         
         String description) {}
     public Post updatePost(Long id, UpdatePostRequest request) {
+        if (!postRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Post with ID " + id + " not found.");
+        }
         Post existingPost = getPostById(id);
-        existingPost.setTitle(request.title());
-        existingPost.setDescription(request.description());
+        Optional.ofNullable(request.title).ifPresent(existingPost::setTitle);
+        Optional.ofNullable(request.description).ifPresent(existingPost::setDescription);
         return postRepository.save(existingPost);
     }
 
