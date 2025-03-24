@@ -24,15 +24,15 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE AssignSkill(
     IN p_user_id INT,
-    IN p_skill_name VARCHAR(50),
-    IN p_skill_level ENUM('BEGINNER', 'INTERMEDIATE', 'ADVANCED')
+    IN p_name VARCHAR(50),
+    IN p_level ENUM('BEGINNER', 'INTERMEDIATE', 'ADVANCED')
 )
 BEGIN
 	 -- Check if user exists
     IF EXISTS (SELECT 1 FROM Users WHERE id = p_user_id) THEN
         -- Insert skill for the existing user
-        INSERT INTO User_Skills (user_id, skill_name, skill_level)
-        VALUES (p_user_id, p_skill_name, p_skill_level);
+        INSERT INTO User_Skills (user_id, name, level)
+        VALUES (p_user_id, p_name, p_level);
     ELSE
         -- Return error message
         SIGNAL SQLSTATE '45000'

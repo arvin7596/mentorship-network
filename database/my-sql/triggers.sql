@@ -70,7 +70,7 @@ FOR EACH ROW
 BEGIN
     IF EXISTS (SELECT 1 FROM User_Skills 
                WHERE user_id = NEW.user_id 
-               AND skill_name = NEW.skill_name) THEN
+               AND name = NEW.name) THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Duplicate skill: The user already has this skill.';
     END IF;

@@ -7,7 +7,7 @@ INSERT INTO Users (first_name, last_name, email, password, phone, birth_date, co
 ('Eve', 'Davis', 'eve.davis@email.com', 'pass222', '+491234567894', '1998-02-17', 'Germany', 'Frankfurt', FALSE, TRUE, TRUE);
 
 -- Insert User Skills
-INSERT INTO User_Skills (user_id, skill_name, skill_level) VALUES
+INSERT INTO User_Skills (user_id, name, level) VALUES
 (1, 'Java', 'ADVANCED'),
 (1, 'SQL', 'INTERMEDIATE'),
 (2, 'Python', 'ADVANCED'),

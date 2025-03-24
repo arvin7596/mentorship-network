@@ -18,8 +18,8 @@ CREATE TABLE User_Skills (
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES Users(id),
-	skill_name VARCHAR(50),
-    skill_level ENUM('BEGINNER', 'INTERMEDIATE','ADVANCED')
+	name VARCHAR(50),
+    level ENUM('BEGINNER', 'INTERMEDIATE','ADVANCED')
 );
 
 

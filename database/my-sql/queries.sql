@@ -7,7 +7,7 @@ select * from session_feedback;
 select * from posts;
 
 -- Retrieve All Mentors and Their Skills
-SELECT users.id, users.first_name, users.last_name, user_skills.skill_name, user_skills.skill_level
+SELECT users.id, users.first_name, users.last_name, user_skills.name, user_skills.level
 FROM users 
 LEFT JOIN User_Skills ON users.id = user_skills.user_id
 WHERE users.is_mentor = TRUE;
