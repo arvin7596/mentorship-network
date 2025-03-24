@@ -11,7 +11,7 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String first_name;
     private String last_name;
     private String email;
@@ -28,7 +28,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String first_name, String last_name, String email, Date birth_date, Boolean is_active, Boolean is_mentee, Boolean is_mentor, String country, String city, String phone, LocalDateTime created_at) {
+    public User(Long id, String first_name, String last_name, String email, Date birth_date, Boolean is_active, Boolean is_mentee, Boolean is_mentor, String country, String city, String phone, LocalDateTime created_at) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -43,11 +43,11 @@ public class User {
         this.created_at = created_at;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

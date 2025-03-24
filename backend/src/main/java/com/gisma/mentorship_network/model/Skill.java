@@ -10,18 +10,18 @@ public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String skill_name;
+    private String name;
     @Enumerated(EnumType.STRING)
-    @Column(name = "skill_level")
-    private SkillLevel skill_level;
+    @Column(name = "level")
+    private SkillLevel level;
     private Long user_id;
 
     public Skill() {}
 
-    public Skill(Long id, String skill_name, SkillLevel skill_level, Long user_id) {
+    public Skill(Long id, String name, SkillLevel level, Long user_id) {
         this.id = id;
-        this.skill_name = skill_name;
-        this.skill_level = skill_level;
+        this.name = name;
+        this.level = level;
         this.user_id = user_id;
     }
 
@@ -33,20 +33,20 @@ public class Skill {
         this.id = id;
     }
 
-    public String getSkill_name() {
-        return skill_name;
+    public String getName() {
+        return name;
     }
 
-    public void setSkill_name(String skill_name) {
-        this.skill_name = skill_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public SkillLevel getSkill_level() {
-        return skill_level;
+    public SkillLevel getLevel() {
+        return level;
     }
 
-    public void setSkill_level(SkillLevel skill_level) {
-        this.skill_level = skill_level;
+    public void setLevel(SkillLevel level) {
+        this.level = level;
     }
 
     public Long getUser_id() {
@@ -61,20 +61,20 @@ public class Skill {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Skill skill = (Skill) o;
-        return Objects.equals(id, skill.id) && Objects.equals(skill_name, skill.skill_name) && skill_level == skill.skill_level && Objects.equals(user_id, skill.user_id);
+        return Objects.equals(id, skill.id) && Objects.equals(name, skill.name) && level == skill.level && Objects.equals(user_id, skill.user_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, skill_name, skill_level, user_id);
+        return Objects.hash(id, name, level, user_id);
     }
 
     @Override
     public String toString() {
         return "Skill{" +
                 "id=" + id +
-                ", skill_name='" + skill_name + '\'' +
-                ", skill_level=" + skill_level +
+                ", name='" + name + '\'' +
+                ", level=" + level +
                 ", user_id=" + user_id +
                 '}';
     }

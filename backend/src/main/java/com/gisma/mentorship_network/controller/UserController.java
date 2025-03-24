@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
+    public User getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "User with ID " + id + " not found."));
@@ -51,13 +51,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody UserService.UpdateUserRequest request) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserService.UpdateUserRequest request) {
         User updatedUser = userService.updateUser(id, request);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable("id") Integer id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }

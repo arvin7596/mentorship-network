@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository
-        extends JpaRepository<User, Integer> {
+        extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.is_mentor = true")
     List<User> findMentors();
@@ -20,7 +20,7 @@ public interface UserRepository
 
     boolean existsByEmail(@NotBlank(message = "Email is required") @Email(message = "Invalid email format") String email);
 
-    boolean existsById(Integer id);
+    boolean existsById(Long id);
 
     Optional<Object> findByEmail(String email);
 }

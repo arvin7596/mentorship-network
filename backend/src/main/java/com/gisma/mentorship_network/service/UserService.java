@@ -34,7 +34,7 @@ public class UserService {
         return userRepository.findMentees();
     }
 
-    public Optional<User> getUserById(int id) {
+    public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
@@ -100,7 +100,7 @@ public class UserService {
     ) {
     }
 
-    public User updateUser(Integer id, UpdateUserRequest user) {
+    public User updateUser(Long id, UpdateUserRequest user) {
         if (!userRepository.existsById(id)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "User with ID " + id + " not found.");
@@ -128,7 +128,7 @@ public class UserService {
 
     }
 
-    public void deleteUser(Integer id) {
+    public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "User with ID " + id + " not found.");

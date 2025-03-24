@@ -21,16 +21,16 @@ public class SkillService {
         return skillRepository.getUserSkills(userId);
     }
 
-    public record CreateSkillRequest(String skill_name, Long user_id, SkillLevel skill_level) {}
+    public record CreateSkillRequest(String name, Long user_id, SkillLevel level) {}
     public Skill createUserSkill(CreateSkillRequest request) {
-        if (skillRepository.existsByNameAndUser(request.skill_name, request.user_id)) {
+        if (skillRepository.existsByUserIdAndName(request.user_id,request.name)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Skill already existed");
         }
 
         Skill skill = new Skill();
-        skill.setSkill_name(request.skill_name);
-        skill.setSkill_level(request.skill_level);
+        skill.setName(request.name);    
+        skill.setLevel(request.level);
         skill.setUser_id(request.user_id);
         return skillRepository.save(skill);
     }

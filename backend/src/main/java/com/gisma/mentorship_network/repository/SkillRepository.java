@@ -9,11 +9,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface SkillRepository
-        extends JpaRepository<Skill, Integer> {
+        extends JpaRepository<Skill, Long> {
 
     @Query("SELECT s FROM Skill s WHERE s.user_id = :userId")
     List<Skill> getUserSkills(@Param("userId") Long userId);
 
-    boolean existsByNameAndUser(String name, Long userId);
+    @Query("SELECT COUNT(s) > 0 FROM Skill s WHERE s.user_id = :userId AND s.name = :name")
+    boolean existsByUserIdAndName(@Param("userId") Long userId, @Param("name") String name);
 }
-
