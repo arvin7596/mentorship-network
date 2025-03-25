@@ -4,7 +4,9 @@ import com.gisma.mentorship_network.model.MentorAvailability;
 import com.gisma.mentorship_network.model.WeekDay;
 import com.gisma.mentorship_network.repository.MentorAvailabilityRepository;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +115,7 @@ public class MentorAvailabilityService {
 
         for (AvailabilityRequest availabilityRequest : request) {
             MentorAvailability availability = new MentorAvailability();
-            availability.setMentor_id(mentorId);
+            availability.setMentorId(mentorId);
             availability.setStartTime(availabilityRequest.startTime());
             availability.setEndTime(availabilityRequest.endTime());
             availability.setWeekday(availabilityRequest.weekday());
@@ -125,10 +127,11 @@ public class MentorAvailabilityService {
 
     public MentorAvailability updateAvailability(Long id, AvailabilityRequest request) {
         MentorAvailability existingAvailability = mentorAvailabilityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Availability not found"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Availability not found"));
 
         // Get existing availabilities for this mentor
-        List<MentorAvailability> existingAvailabilities = mentorAvailabilityRepository.findByMentorId(existingAvailability.getMentor_id());
+        List<MentorAvailability> existingAvailabilities = mentorAvailabilityRepository.findByMentorId(existingAvailability.getMentorId());
 
         for (MentorAvailability existing : existingAvailabilities) {
             // Skip checking against the record being updated

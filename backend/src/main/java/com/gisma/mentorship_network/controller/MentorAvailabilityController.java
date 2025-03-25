@@ -35,7 +35,7 @@ public class MentorAvailabilityController {
         return mentorAvailabilityService.getAvailableTimeSlots(mentorId);
     }
 
-    @PostMapping
+    @PostMapping("/{mentorId}")
     public List<MentorAvailability> createAvailability(@RequestBody List<MentorAvailabilityService.AvailabilityRequest> request, @PathVariable Long mentorId) {
         return mentorAvailabilityService.createAvailabilities(request, mentorId);
     }
