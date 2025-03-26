@@ -14,7 +14,9 @@ public class Skill {
     @Enumerated(EnumType.STRING)
     @Column(name = "level")
     private SkillLevel level;
-    private Long user_id;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     public Skill() {}
 
@@ -22,7 +24,7 @@ public class Skill {
         this.id = id;
         this.name = name;
         this.level = level;
-        this.user_id = user_id;
+        this.userId = user_id;
     }
 
     public Long getId() {
@@ -49,24 +51,24 @@ public class Skill {
         this.level = level;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Skill skill = (Skill) o;
-        return Objects.equals(id, skill.id) && Objects.equals(name, skill.name) && level == skill.level && Objects.equals(user_id, skill.user_id);
+        return Objects.equals(id, skill.id) && Objects.equals(name, skill.name) && level == skill.level && Objects.equals(userId, skill.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, level, user_id);
+        return Objects.hash(id, name, level, userId);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class Skill {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", level=" + level +
-                ", user_id=" + user_id +
+                ", userId=" + userId +
                 '}';
     }
 }
