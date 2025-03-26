@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.gisma.mentorship_network.model.MentorshipSession;
 import com.gisma.mentorship_network.model.SessionFeedback;
 import com.gisma.mentorship_network.repository.SessionFeedbackRepository;
 
@@ -31,14 +32,18 @@ public class SessionFeedbackService {
     }
     public record CreateSessionFeedbackRequest(
         @NotNull(message = "Session ID is required")
-        Long sessionId,
+        MentorshipSession sessionId,
         @NotBlank(message = "Mentee feedback is required")
         String menteeFeedback,
         @NotNull(message = "Rate is required")  
         double rate
     ){};
     public SessionFeedback createSessionFeedback(CreateSessionFeedbackRequest request) {
-        return sessionFeedbackRepository.save(new SessionFeedback(null, request.sessionId(), request.menteeFeedback(), request.rate(), LocalDateTime.now()));
+        SessionFeedback newFeedback = new SessionFeedback();
+        newFeedback.setMenteeFeedback((request.menteeFeedback()));
+        newFeedback.setRate((request.rate()));
+        newFeedback.setSessionId((request.sessionId()));
+        return sessionFeedbackRepository.save(newFeedback);
     }
     public record UpdateSessionFeedbackRequest(
         @NotBlank(message = "Mentee feedback is required")

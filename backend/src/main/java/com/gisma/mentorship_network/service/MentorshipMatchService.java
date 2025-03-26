@@ -2,6 +2,7 @@ package com.gisma.mentorship_network.service;
 
 import com.gisma.mentorship_network.model.MatchStatus;
 import com.gisma.mentorship_network.model.MentorshipMatch;
+import com.gisma.mentorship_network.model.User;
 import com.gisma.mentorship_network.repository.MentorshipMatchRepository;
 import com.gisma.mentorship_network.repository.UserRepository;
 import jakarta.validation.constraints.NotBlank;
@@ -38,31 +39,31 @@ public class MentorshipMatchService {
 
      public record CreateMentorshipMatchRequest(
          @NotNull(message = "Mentor ID is required")
-         Long mentor_id,
+         User mentor,
          @NotNull(message = "Mentee ID is required")
-         Long mentee_id,
+         User mentee,
          @NotBlank(message = "Topic is required")
          String topic
      ){
      };
      public MentorshipMatch createMentorshipMatch(CreateMentorshipMatchRequest request) {
 
-         if (!userRepository.existsById(request.mentor_id())) {
+         if (!userRepository.existsById(request.mentor.getId())) {
              throw new ResponseStatusException(
-                     HttpStatus.NOT_FOUND, "Mentor with ID " +  request.mentor_id + " not found.");
+                     HttpStatus.NOT_FOUND, "Mentor with ID " +  request.mentor.getId() + " not found.");
          }
-         if (!userRepository.existsById(request.mentee_id())) {
+         if (!userRepository.existsById(request.mentee.getId())) {
              throw new ResponseStatusException(
-                     HttpStatus.NOT_FOUND, "Mentee with ID " +  request.mentee_id + " not found.");
+                     HttpStatus.NOT_FOUND, "Mentee with ID " +  request.mentee.getId() + " not found.");
          }
          MentorshipMatch mentorshipMatch = new MentorshipMatch();
-         mentorshipMatch.setMentor_id(request.mentor_id());
-         mentorshipMatch.setMentee_id(request.mentee_id());
-         mentorshipMatch.setTopic(request.topic());
+         mentorshipMatch.setMentor(request.mentor);
+         mentorshipMatch.setMentee(request.mentee);
+         mentorshipMatch.setTopic(request.topic);
          mentorshipMatch.setStatus(MatchStatus.NEW);
          mentorshipMatch.setProgress(0);
-         mentorshipMatch.setMentor_feedback("");
-         mentorshipMatch.setMentee_feedback("");
+         mentorshipMatch.setMentorFeedback("");
+         mentorshipMatch.setMenteeFeedback("");
          return mentorshipMatchRepository.save(mentorshipMatch);
      }
 
@@ -73,8 +74,8 @@ public class MentorshipMatchService {
          MentorshipMatch existingMatch = getMentorshipMatchById(id);
          Optional.ofNullable(mentorshipMatch.getStatus()).ifPresent(existingMatch::setStatus);
          Optional.ofNullable(mentorshipMatch.getProgress()).ifPresent(existingMatch::setProgress);
-         Optional.ofNullable(mentorshipMatch.getMentor_feedback()).ifPresent(existingMatch::setMentor_feedback);
-         Optional.ofNullable(mentorshipMatch.getMentee_feedback()).ifPresent(existingMatch::setMentee_feedback);
+         Optional.ofNullable(mentorshipMatch.getMentorFeedback()).ifPresent(existingMatch::setMentorFeedback);
+         Optional.ofNullable(mentorshipMatch.getMenteeFeedback()).ifPresent(existingMatch::setMenteeFeedback);
          mentorshipMatch.setId(id);
          return mentorshipMatchRepository.save(mentorshipMatch);
      }

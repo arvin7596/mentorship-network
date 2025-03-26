@@ -10,27 +10,33 @@ public class MentorshipMatch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long mentor_id;
-    private Long mentee_id;
+    @ManyToOne
+    @JoinColumn(name = "mentor_id")
+    private User mentor;
+    @ManyToOne
+    @JoinColumn(name = "mentee_id")
+    private User mentee;
     private String topic;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private MatchStatus status;
     private int progress;
-    private String mentor_feedback;
-    private String mentee_feedback;
+    @Column(name = "mentor_feedback")
+    private String mentorFeedback;
+    @Column(name = "mentee_feedback")
+    private String menteeFeedback;
 
     public MentorshipMatch() {}
 
-    public MentorshipMatch(Long id, Long mentor_id, Long mentee_id, String topic, MatchStatus status, int progress, String mentor_feedback, String mentee_feedback) {
+    public MentorshipMatch(Long id, User mentor, User mentee, String topic, MatchStatus status, int progress, String mentorFeedback, String menteeFeedback) {
         this.id = id;   
-        this.mentor_id = mentor_id;
-        this.mentee_id = mentee_id;
+        this.mentor = mentor;
+        this.mentee = mentee;
         this.topic = topic;
         this.status = status;
         this.progress = progress;
-        this.mentor_feedback = mentor_feedback; 
-        this.mentee_feedback = mentee_feedback;
+        this.mentorFeedback = mentorFeedback; 
+        this.menteeFeedback = menteeFeedback;
     }
 
     public Long getId() {
@@ -41,20 +47,20 @@ public class MentorshipMatch {
         this.id = id;
     }
 
-    public Long getMentor_id() {
-        return mentor_id;
+    public User getMentor() {
+        return mentor;
     }
 
-    public void setMentor_id(Long mentor_id) {
-        this.mentor_id = mentor_id;
+    public void setMentor(User mentor) {
+        this.mentor = mentor;
     }
 
-    public Long getMentee_id() {
-        return mentee_id;
+    public User getMentee() {
+        return mentee;
     }
 
-    public void setMentee_id(Long mentee_id) {
-        this.mentee_id = mentee_id;
+    public void setMentee(User mentee) {
+        this.mentee = mentee;
     }
 
     public String getTopic() {
@@ -81,45 +87,45 @@ public class MentorshipMatch {
         this.progress = progress;
     }
 
-    public String getMentor_feedback() {
-        return mentor_feedback;
+    public String getMentorFeedback() {
+        return mentorFeedback;
     }
 
-    public void setMentor_feedback(String mentor_feedback) {
-        this.mentor_feedback = mentor_feedback;
+    public void setMentorFeedback(String mentorFeedback) {
+        this.mentorFeedback = mentorFeedback;
     }
 
-    public String getMentee_feedback() {
-        return mentee_feedback;
+    public String getMenteeFeedback() {
+        return menteeFeedback;
     }
 
-    public void setMentee_feedback(String mentee_feedback) {
-        this.mentee_feedback = mentee_feedback;
+    public void setMenteeFeedback(String menteeFeedback) {
+        this.menteeFeedback = menteeFeedback;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         MentorshipMatch that = (MentorshipMatch) o;
-        return progress == that.progress && Objects.equals(id, that.id) && Objects.equals(mentor_id, that.mentor_id) && Objects.equals(mentee_id, that.mentee_id) && Objects.equals(topic, that.topic) && Objects.equals(status, that.status) && Objects.equals(mentor_feedback, that.mentor_feedback) && Objects.equals(mentee_feedback, that.mentee_feedback);
+        return progress == that.progress && Objects.equals(id, that.id) && Objects.equals(mentor, that.mentor) && Objects.equals(mentee, that.mentee) && Objects.equals(topic, that.topic) && Objects.equals(status, that.status) && Objects.equals(mentorFeedback, that.mentorFeedback) && Objects.equals(menteeFeedback, that.menteeFeedback);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, mentor_id, mentee_id, topic, status, progress, mentor_feedback, mentee_feedback);
+        return Objects.hash(id, mentor, mentee, topic, status, progress, mentorFeedback, menteeFeedback);
     }
 
     @Override
     public String toString() {
         return "MentorshipMatch{" +
                 "id=" + id +
-                ", mentor_id=" + mentor_id +
-                ", mentee_id=" + mentee_id +
+                ", mentor=" + mentor +
+                ", mentee=" + mentee +
                 ", topic='" + topic + '\'' +
                 ", status='" + status + '\'' +
                 ", progress=" + progress +
-                ", mentor_feedback='" + mentor_feedback + '\'' +
-                ", mentee_feedback='" + mentee_feedback + '\'' +
+                ", mentorFeedback='" + mentorFeedback + '\'' +
+                ", menteeFeedback='" + menteeFeedback + '\'' +
                 '}';
     }
 }

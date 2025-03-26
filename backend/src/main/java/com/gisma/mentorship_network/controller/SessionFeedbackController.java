@@ -2,6 +2,8 @@ package com.gisma.mentorship_network.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.gisma.mentorship_network.model.SessionFeedback;
@@ -28,10 +30,21 @@ public class SessionFeedbackController {
     }
 
     @PostMapping
-    public SessionFeedback createSessionFeedback(@RequestBody SessionFeedbackService.CreateSessionFeedbackRequest request) {
-        return sessionFeedbackService.createSessionFeedback(request);
+    public ResponseEntity<SessionFeedback> createSessionFeedback(@RequestBody SessionFeedbackService.CreateSessionFeedbackRequest request) {
+        SessionFeedback createdFeedback = sessionFeedbackService.createSessionFeedback(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdFeedback);
     }
-    
+    @PutMapping("/{id}")
+    public ResponseEntity<SessionFeedback>  updateSessionFeedback(@PathVariable Long id, @RequestBody SessionFeedbackService.UpdateSessionFeedbackRequest request) {
+        SessionFeedback updatedFeedback = sessionFeedbackService.updateSessionFeedback(id, request);
+        return ResponseEntity.ok(updatedFeedback);
+    }
+
+    @DeleteMapping("/{id}") 
+    public ResponseEntity<Void> deleteSessionFeedback(@PathVariable Long id) {
+        sessionFeedbackService.deleteSessionFeedback(id);
+        return ResponseEntity.noContent().build();
+    }
     
 
 }
