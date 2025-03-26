@@ -50,9 +50,10 @@ CREATE TABLE Mentorship_Sessions(
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   mentorship_match_id BIGINT,
   FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Matches(id),
-  status ENUM("PENDING", "ACCEPTED", "COMPLETED", "CANCELED") DEFAULT 'PENDING',
+  status ENUM("PENDING", "ACCEPTED", "COMPLETED", "CANCELED", "REJECTED") DEFAULT 'PENDING',
   scheduled_date DATETIME,
-  mentor_notes TEXT
+  mentor_notes TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ); 
 
 CREATE TABLE Session_Feedbacks (
