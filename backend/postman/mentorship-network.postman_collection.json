@@ -295,7 +295,7 @@
             "url": "http://localhost:8080/api/sessions",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"mentorId\": 1,\n    \"menteeId\": 2,\n    \"startTime\": \"2024-03-20T10:00:00\",\n    \"endTime\": \"2024-03-20T11:00:00\",\n    \"topic\": \"Java Programming\"\n}",
+              "raw": "{\n    \"match_id\": 1,\n    \"scheduled_date\": \"2024-03-20T10:00:00\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -311,7 +311,7 @@
             "url": "http://localhost:8080/api/sessions/1",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"startTime\": \"2024-03-20T11:00:00\",\n    \"endTime\": \"2024-03-20T12:00:00\",\n    \"topic\": \"Updated Topic\"\n}",
+              "raw": "{\n    \"scheduled_date\": \"2024-03-20T11:00:00\",\n    \"status\": \"ACCEPTED\",\n    \"note\": \"Updated Topic\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
