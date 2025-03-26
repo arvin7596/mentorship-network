@@ -3,13 +3,12 @@ package com.gisma.mentorship_network.service;
 import com.gisma.mentorship_network.model.MentorshipSession;
 import com.gisma.mentorship_network.model.SessionStatus;
 import com.gisma.mentorship_network.repository.MentorshipSessionRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -35,7 +34,7 @@ public class MentorshipSessionService {
             Long mentorshipMatchId,
 
             @NotBlank(message = "Scheduled date is required")
-            Date scheduledDate
+            LocalDateTime scheduledDate
             ) {}
 
     public MentorshipSession createMentorshipSession(MentorshipSessionRequest request) {
@@ -46,7 +45,7 @@ public class MentorshipSessionService {
     }
 
     public record UpdateMentorshipSessionRequest(
-      Date scheduledDate, SessionStatus status, String mentorNotes
+            LocalDateTime scheduledDate, SessionStatus status, String mentorNotes
     ) {}
 
     public MentorshipSession updateMentorshipSession(Long id, UpdateMentorshipSessionRequest request) {
