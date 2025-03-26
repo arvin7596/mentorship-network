@@ -111,7 +111,7 @@ public class UserService {
         Optional.ofNullable(user.first_name).ifPresent(userToUpdate::setFirst_name);
         Optional.ofNullable(user.last_name).ifPresent(userToUpdate::setLast_name);
         Optional.ofNullable(user.email).ifPresent(email -> {
-            if (userRepository.existsByEmail(user.email)) {
+            if (!email.equals(userToUpdate.getEmail()) && userRepository.existsByEmail(email)) {
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST, "Email is already in use");
             }

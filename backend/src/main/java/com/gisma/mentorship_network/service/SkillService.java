@@ -3,6 +3,7 @@ package com.gisma.mentorship_network.service;
 import com.gisma.mentorship_network.model.Skill;
 import com.gisma.mentorship_network.model.SkillLevel;
 import com.gisma.mentorship_network.repository.SkillRepository;
+import com.gisma.mentorship_network.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,12 +13,17 @@ import java.util.List;
 @Service
 public class SkillService {
     private final SkillRepository skillRepository;
+    private final UserRepository userRepository;
 
-    public SkillService(SkillRepository skillRepository) {
+    public SkillService(SkillRepository skillRepository, UserRepository userRepository) {
         this.skillRepository = skillRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Skill> getAllUserSkills(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with ID " + userId + " not found");
+        }
         return skillRepository.getUserSkills(userId);
     }
 
