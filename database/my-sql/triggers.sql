@@ -2,17 +2,17 @@
 DELIMITER //
 
 CREATE TRIGGER check_mentor_availability
-BEFORE INSERT ON Mentor_Availability
+BEFORE INSERT ON Mentor_Availabilities
 FOR EACH ROW
 BEGIN
     DECLARE conflict_count INT;
     
     SELECT COUNT(*) INTO conflict_count
-    FROM Mentor_Availability
+    FROM Mentor_Availabilities  
     WHERE mentor_id = NEW.mentor_id 
       AND weekday = NEW.weekday
-      AND ((NEW.start_time BETWEEN start_time AND end_date) 
-           OR (NEW.end_date BETWEEN start_time AND end_date));
+      AND ((NEW.start_time BETWEEN start_time AND end_time) 
+           OR (NEW.end_time BETWEEN start_time AND end_time));
 
     IF conflict_count > 0 THEN
         SIGNAL SQLSTATE '45000'
@@ -29,11 +29,11 @@ DELIMITER ;
 DELIMITER //
 
 CREATE TRIGGER update_mentorship_status
-BEFORE UPDATE ON Mentorship_Match
-FOR EACH ROW
+BEFORE UPDATE ON Mentorship_Matches
+FOR EACH ROW    
 BEGIN
     IF NEW.progress = 100 THEN
-        SET NEW.status = 'completed';
+        SET NEW.status = 'COMPLETED';
     END IF;
 END;
 
@@ -47,7 +47,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE TRIGGER prevent_self_mentorship
-BEFORE INSERT ON Mentorship_Match
+BEFORE INSERT ON Mentorship_Matches 
 FOR EACH ROW
 BEGIN
     IF NEW.mentor_id = NEW.mentee_id THEN
@@ -84,7 +84,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE TRIGGER check_active_mentor
-BEFORE INSERT ON Mentorship_Match
+BEFORE INSERT ON Mentorship_Matches
 FOR EACH ROW
 BEGIN
     DECLARE mentor_status BOOLEAN;

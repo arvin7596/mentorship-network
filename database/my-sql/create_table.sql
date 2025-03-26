@@ -23,7 +23,7 @@ CREATE TABLE User_Skills (
 );
 
 
-CREATE TABLE Mentor_Availability (
+CREATE TABLE Mentor_Availabilities (
  id BIGINT PRIMARY KEY AUTO_INCREMENT,
  mentor_id BIGINT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
@@ -33,7 +33,7 @@ CREATE TABLE Mentor_Availability (
 );
 
 
-CREATE TABLE Mentorship_Match(
+CREATE TABLE Mentorship_Matches(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
 mentor_id BIGINT,
  FOREIGN KEY (mentor_id) REFERENCES Users(id),
@@ -46,27 +46,27 @@ mentor_id BIGINT,
  mentee_feedback TEXT
 );
 
-CREATE TABLE Mentorship_Session(
+CREATE TABLE Mentorship_Sessions(
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   mentorship_match_id BIGINT,
-  FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Match(id),
+  FOREIGN KEY (mentorship_match_id) REFERENCES Mentorship_Matches(id),
   status ENUM("PENDING", "ACCEPTED", "COMPLETED", "CANCELED") DEFAULT 'PENDING',
   scheduled_date DATETIME,
   mentor_notes TEXT
 ); 
 
-CREATE TABLE Session_Feedback (
+CREATE TABLE Session_Feedbacks (
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
 session_id BIGINT,
-FOREIGN KEY (session_id) REFERENCES Mentorship_Session(id),
+FOREIGN KEY (session_id) REFERENCES Mentorship_Sessions(id),
 mentee_feedback TEXT,
 rate DECIMAL CHECK (rate >= 0 AND rate <= 10)
 );
 
 CREATE TABLE Posts(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
-title varchar(100),
-description text,
+title VARCHAR(100),
+description TEXT,
 author_id BIGINT,
 FOREIGN KEY (author_id) REFERENCES Users(id)
 )

@@ -17,25 +17,25 @@ INSERT INTO User_Skills (user_id, name, level) VALUES
 (5, 'Data Science', 'INTERMEDIATE');
 
 -- Insert Mentor Availability
-INSERT INTO Mentor_Availability (mentor_id, weekday, start_time, end_time) VALUES
+INSERT INTO Mentor_Availabilities (mentor_id, weekday, start_time, end_time) VALUES
 (1, 'MONDAY', '09:00:00', '12:00:00'),
 (3, 'WEDNESDAY', '14:00:00', '17:00:00'),
 (4, 'FRIDAY', '10:00:00', '13:30:00');
 
 -- Insert Mentorship Matches
-INSERT INTO Mentorship_Match (mentor_id, mentee_id, topic, status, progress, mentor_feedback, mentee_feedback) VALUES
+INSERT INTO Mentorship_Matches (mentor_id, mentee_id, topic, status, progress, mentor_feedback, mentee_feedback) VALUES
 (1, 2, 'Java Programming', 'IN PROGRESS', 40, 'Good understanding so far.', 'Learning a lot.'),
 (3, 5, 'Web Development', 'NEW', 0, NULL, NULL),
 (4, 2, 'Cloud Computing', 'COMPLETED', 100, 'Excellent progress!', 'Gained valuable knowledge.');
 
 -- Insert Mentorship Sessions
-INSERT INTO Mentorship_Session (mentorship_match_id, status, scheduled_date, mentor_notes) VALUES
+INSERT INTO Mentorship_Sessions (mentorship_match_id, status, scheduled_date, mentor_notes) VALUES
 (1, 'PENDING', '2025-03-15 10:00:00', 'Focus on Java OOP principles.'),
 (2, 'ACCEPTED', '2025-03-16 14:00:00', 'Prepare for JavaScript ES6.'),
 (3, 'COMPLETED', '2025-03-10 16:00:00', 'Covered AWS services.');
 
 -- Insert Session Feedback
-INSERT INTO Session_Feedback (session_id, mentee_feedback, rate) VALUES
+INSERT INTO Session_Feedbacks (session_id, mentee_feedback, rate) VALUES
 (1, 'Great session! Learned a lot about Java.', 9),
 (2, 'Excited to explore more about JavaScript.', 8),
 (3, 'Cloud computing concepts were well explained.', 10);

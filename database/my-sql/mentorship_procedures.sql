@@ -53,7 +53,7 @@ CREATE PROCEDURE CreateMentorshipMatch(
 BEGIN
 	 -- Check if user exists
     IF EXISTS (SELECT 1 FROM Users WHERE id = p_mentor_id) AND (SELECT 1 FROM Users WHERE id = p_mentee_id) THEN
-        INSERT INTO Mentorship_Match (mentor_id, mentee_id, topic, status, progress) 
+        INSERT INTO Mentorship_Matches (mentor_id, mentee_id, topic, status, progress) 
 		VALUES (p_mentor_id, p_mentee_id, p_topic, 'NEW', 0);
     ELSE
         -- Return error message
@@ -72,7 +72,7 @@ CREATE PROCEDURE ScheduleMentorshipSession(
     IN p_scheduled_date DATETIME
 )
 BEGIN
-    INSERT INTO Mentorship_Session (mentorship_match_id, status, scheduled_date) 
+    INSERT INTO Mentorship_Sessions (mentorship_match_id, status, scheduled_date) 
     VALUES (p_match_id, 'PENDING', p_scheduled_date);
 END //
 DELIMITER ;
