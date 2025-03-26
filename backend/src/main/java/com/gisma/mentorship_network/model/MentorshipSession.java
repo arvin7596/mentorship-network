@@ -3,7 +3,6 @@ package com.gisma.mentorship_network.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -17,7 +16,7 @@ public class MentorshipSession {
     private Long mentorshipMatchId;
 
     @Column(name = "scheduled_date")
-    private Date scheduledDate;
+    private LocalDateTime scheduledDate;
 
     @Column(name = "mentor_notes")
     private String mentorNotes;
@@ -31,7 +30,7 @@ public class MentorshipSession {
 
     public MentorshipSession() {}
 
-    public MentorshipSession(Long id, Long mentorshipMatchId, Date scheduledDate, String mentorNotes, SessionStatus status, LocalDateTime createdAt) {
+    public MentorshipSession(Long id, Long mentorshipMatchId, LocalDateTime scheduledDate, String mentorNotes, SessionStatus status, LocalDateTime createdAt) {
         this.id = id;
         this.mentorshipMatchId = mentorshipMatchId;
         this.scheduledDate = scheduledDate;
@@ -56,11 +55,11 @@ public class MentorshipSession {
         this.mentorshipMatchId = mentorshipMatchId;
     }
 
-    public Date getScheduledDate() {
+    public LocalDateTime getScheduledDate() {
         return scheduledDate;
     }
 
-    public void setScheduledDate(Date scheduledDate) {
+    public void setScheduledDate(LocalDateTime scheduledDate) {
         this.scheduledDate = scheduledDate;
     }
 

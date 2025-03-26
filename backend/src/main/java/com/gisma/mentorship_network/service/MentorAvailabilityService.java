@@ -148,6 +148,10 @@ public class MentorAvailabilityService {
     }
 
     public void deleteAvailability(Long id) {
+        if(!mentorAvailabilityRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Availability with ID " + id + " not found.");
+        }
         mentorAvailabilityRepository.deleteById(id);
     }
 }

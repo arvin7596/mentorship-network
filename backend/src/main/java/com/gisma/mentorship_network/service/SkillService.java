@@ -46,6 +46,10 @@ public class SkillService {
     }
 
     public void deleteSkill(Long id) {
+        if(!skillRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Skill with ID " + id + " not found.");
+        }
         skillRepository.deleteById(id);
     }
     
