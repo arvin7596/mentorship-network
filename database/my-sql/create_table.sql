@@ -69,5 +69,6 @@ id BIGINT PRIMARY KEY AUTO_INCREMENT,
 title VARCHAR(100),
 description TEXT,
 author_id BIGINT,
-FOREIGN KEY (author_id) REFERENCES Users(id)
+FOREIGN KEY (author_id) REFERENCES Users(id),
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
