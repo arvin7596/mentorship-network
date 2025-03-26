@@ -23,17 +23,17 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
+    public List<UserService.UserDTO> getUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/mentors")
-    public List<User> getMentors() {
+    public List<UserService.UserDTO> getMentors() {
         return userService.getMentors();
     }
 
     @GetMapping("/mentees")
-    public List<User> getMentees() {
+    public List<UserService.UserDTO> getMentees() {
         return userService.getMentees();
     }
 
@@ -45,14 +45,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserService.CreateUserRequest request) {
-        User createdUser = userService.createUser(request);
+    public ResponseEntity<UserService.UserDTO> createUser(@RequestBody UserService.CreateUserRequest request) {
+        UserService.UserDTO createdUser = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserService.UpdateUserRequest request) {
-        User updatedUser = userService.updateUser(id, request);
+    public ResponseEntity<UserService.UserDTO> updateUser(@PathVariable Long id, @RequestBody UserService.UpdateUserRequest request) {
+        UserService.UserDTO updatedUser = userService.updateUser(id, request);
         return ResponseEntity.ok(updatedUser);
     }
 

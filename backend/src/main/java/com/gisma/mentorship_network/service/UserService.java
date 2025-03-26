@@ -22,23 +22,38 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public UserDTO getUserDTO(User user) {
+        return new UserDTO(user.getId(), user.getFirst_name(), user.getLast_name(), user.getEmail(), user.getCountry(), user.getCity());
     }
 
-    public List<User> getMentors() {
-        return userRepository.findMentors();
+    public List<UserDTO> getUsersDTOs(List<User> users) {
+        return users.stream().map(this::getUserDTO).toList();
     }
 
-    public List<User> getMentees() {
-        return userRepository.findMentees();
+    public List<UserDTO> getAllUsers() {
+        return getUsersDTOs(userRepository.findAll());
+    }
+
+    public List<UserDTO> getMentors() {
+        return getUsersDTOs(userRepository.findMentors());
+    }
+
+    public List<UserDTO> getMentees() {
+        return getUsersDTOs(userRepository.findMentees());
     }
 
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
-
+    public record UserDTO(
+        Long id,
+        String first_name,
+        String last_name,
+        String email,
+        String country,
+        String city
+    ) {}
     public record CreateUserRequest(
             @NotBlank(message = "First name is required")
             @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
@@ -61,7 +76,7 @@ public class UserService {
     ) {
     }
 
-    public User createUser(CreateUserRequest request) {
+    public UserDTO createUser(CreateUserRequest request) {
         if (userRepository.existsByEmail(request.email)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Email already registered");
@@ -77,7 +92,8 @@ public class UserService {
         user.setCreated_at(LocalDateTime.now());
         user.setIs_active(true);
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return getUserDTO(savedUser);
     }
 
 
@@ -100,7 +116,7 @@ public class UserService {
     ) {
     }
 
-    public User updateUser(Long id, UpdateUserRequest user) {
+    public UserDTO updateUser(Long id, UpdateUserRequest user) {
         if (!userRepository.existsById(id)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "User with ID " + id + " not found.");
@@ -124,7 +140,8 @@ public class UserService {
         Optional.ofNullable(user.phone).ifPresent(userToUpdate::setPhone);
         Optional.ofNullable(user.birth_date).ifPresent(userToUpdate::setBirth_date);
 
-        return userRepository.save(userToUpdate);
+        User savedUser = userRepository.save(userToUpdate);
+        return getUserDTO(savedUser);
 
     }
 
