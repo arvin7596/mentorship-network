@@ -33,6 +33,10 @@ public class SkillService {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Skill already existed");
         }
+        if (!userRepository.existsById(request.user_id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "User with ID " + request.user_id + " not found");
+        }
 
         Skill skill = new Skill();
         skill.setName(request.name);    

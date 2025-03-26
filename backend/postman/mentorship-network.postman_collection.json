@@ -107,7 +107,7 @@
             "url": "http://localhost:8080/api/skills",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"userId\": 1,\n    \"skillName\": \"Java\",\n    \"skillLevel\": \"INTERMEDIATE\"\n}",
+              "raw": "{\n    \"user_id\": 1,\n    \"name\": \"Java\",\n    \"level\": \"INTERMEDIATE\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -123,7 +123,7 @@
             "url": "http://localhost:8080/api/skills/1",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"skillLevel\": \"ADVANCED\"\n}",
+              "raw": "{\n    \"name\": \"SQL\",\n    \"level\": \"ADVANCED\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
