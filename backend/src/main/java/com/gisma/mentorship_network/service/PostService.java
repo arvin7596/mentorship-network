@@ -29,7 +29,8 @@ public class PostService {
 
     public Post getPostById(Long id) {
         return postRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Post not found"));
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Post with ID " + id + " not found."));
     }
 
     public record CreatePostRequest(

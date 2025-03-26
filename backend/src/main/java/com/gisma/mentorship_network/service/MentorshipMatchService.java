@@ -1,5 +1,6 @@
 package com.gisma.mentorship_network.service;
 
+import com.gisma.mentorship_network.model.MatchStatus;
 import com.gisma.mentorship_network.model.MentorshipMatch;
 import com.gisma.mentorship_network.repository.MentorshipMatchRepository;
 import com.gisma.mentorship_network.repository.UserRepository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
+import java.util.Optional;
 @Service
 public class MentorshipMatchService {
     private final MentorshipMatchRepository mentorshipMatchRepository;
@@ -45,6 +46,7 @@ public class MentorshipMatchService {
      ){
      };
      public MentorshipMatch createMentorshipMatch(CreateMentorshipMatchRequest request) {
+
          if (!userRepository.existsById(request.mentor_id())) {
              throw new ResponseStatusException(
                      HttpStatus.NOT_FOUND, "Mentor with ID " +  request.mentor_id + " not found.");
@@ -57,6 +59,10 @@ public class MentorshipMatchService {
          mentorshipMatch.setMentor_id(request.mentor_id());
          mentorshipMatch.setMentee_id(request.mentee_id());
          mentorshipMatch.setTopic(request.topic());
+         mentorshipMatch.setStatus(MatchStatus.NEW);
+         mentorshipMatch.setProgress(0);
+         mentorshipMatch.setMentor_feedback("");
+         mentorshipMatch.setMentee_feedback("");
          return mentorshipMatchRepository.save(mentorshipMatch);
      }
 
@@ -64,6 +70,11 @@ public class MentorshipMatchService {
          if (!mentorshipMatchRepository.existsById(id)) {
              throw new RuntimeException("MentorshipMatch not found with id: " + id);
          }
+         MentorshipMatch existingMatch = getMentorshipMatchById(id);
+         Optional.ofNullable(mentorshipMatch.getStatus()).ifPresent(existingMatch::setStatus);
+         Optional.ofNullable(mentorshipMatch.getProgress()).ifPresent(existingMatch::setProgress);
+         Optional.ofNullable(mentorshipMatch.getMentor_feedback()).ifPresent(existingMatch::setMentor_feedback);
+         Optional.ofNullable(mentorshipMatch.getMentee_feedback()).ifPresent(existingMatch::setMentee_feedback);
          mentorshipMatch.setId(id);
          return mentorshipMatchRepository.save(mentorshipMatch);
      }

@@ -13,14 +13,16 @@ public class MentorshipMatch {
     private Long mentor_id;
     private Long mentee_id;
     private String topic;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private MatchStatus status;
     private int progress;
     private String mentor_feedback;
     private String mentee_feedback;
 
     public MentorshipMatch() {}
 
-    public MentorshipMatch(Long id, Long mentor_id, Long mentee_id, String topic, String status, int progress, String mentor_feedback, String mentee_feedback) {
+    public MentorshipMatch(Long id, Long mentor_id, Long mentee_id, String topic, MatchStatus status, int progress, String mentor_feedback, String mentee_feedback) {
         this.id = id;   
         this.mentor_id = mentor_id;
         this.mentee_id = mentee_id;
@@ -63,11 +65,11 @@ public class MentorshipMatch {
         this.topic = topic;
     }
 
-    public String getStatus() {
+    public MatchStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(MatchStatus status) {
         this.status = status;
     }
 
