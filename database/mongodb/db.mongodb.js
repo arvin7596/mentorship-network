@@ -5,7 +5,7 @@ db.createCollection("posts_feedback");
 
 /* INSERT POST FEEDBACK */
 db.posts_feedback.insertOne({
-  _id: ObjectId(),
+  _id: ObjectId("67e17dc79ae494ae5933ad05"),
   post_id: 1,
   user_id: 3,
   is_liked: true,
@@ -18,7 +18,7 @@ db.posts_feedback.insertOne({
 /* INSERT MULTIPLE POST FEEDBACK */
 db.posts_feedback.insertMany([
   {
-    _id: ObjectId(),
+    _id: ObjectId("67e17dc79ae494ae5933ad06"),
     post_id: 1,
     user_id: 2,
     is_liked: true,
@@ -28,20 +28,20 @@ db.posts_feedback.insertMany([
     is_saved: true,
   },
   {
-    _id: ObjectId(),
+    _id: ObjectId("67e17dc79ae494ae5933ad07"),
     post_id: 1,
     user_id: 1,
     timestamp: new Date(),
     comment: [{ date: new Date(), text: "This is a comment 2" }],
   },
   {
-    _id: ObjectId(),
+    _id: ObjectId("67e17dc79ae494ae5933ad08"),
     post_id: 2,
     user_id: 3,
     timestamp: new Date(),
   },
   {
-    _id: ObjectId(),
+    _id: ObjectId("67e17dc79ae494ae5933ad09"),
     post_id: 2,
     user_id: 1,
     is_liked: true,
@@ -49,13 +49,13 @@ db.posts_feedback.insertMany([
     comment: [{ date: new Date(), text: "Test Comment 4" }],
   },
   {
-    _id: ObjectId(),
+    _id: ObjectId("67e17dc79ae494ae5933ad0a"),
     post_id: 3,
     user_id: 2,
     timestamp: new Date(),
   },
   {
-    _id: ObjectId(),
+    _id: ObjectId("67e17dc79ae494ae5933ad0b"),
     post_id: 3,
     user_id: 3,
     timestamp: new Date(),
@@ -63,7 +63,7 @@ db.posts_feedback.insertMany([
     is_liked: true,
   },
   {
-    _id: ObjectId(),
+    _id: ObjectId("67e17dc79ae494ae5933ad0c"),
     post_id: 4,
     user_id: 1,
     timestamp: new Date(),
