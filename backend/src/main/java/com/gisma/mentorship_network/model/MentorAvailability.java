@@ -44,12 +44,12 @@ public class MentorAvailability
         this.id = id;
     }
 
-    public Long getMentor_id() {
+    public Long getMentorId() {
         return mentorId;
     }
 
-    public void setMentor_id(Long mentor_id) {
-        this.mentorId = mentor_id;
+    public void setMentorId(Long mentorId) {
+        this.mentorId = mentorId;
     }
 
     public LocalTime getStartTime() {
