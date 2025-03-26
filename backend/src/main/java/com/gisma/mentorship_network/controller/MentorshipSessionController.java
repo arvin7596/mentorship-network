@@ -1,6 +1,7 @@
 package com.gisma.mentorship_network.controller;
 
 import com.gisma.mentorship_network.model.MentorshipSession;
+import com.gisma.mentorship_network.model.SessionStatus;
 import com.gisma.mentorship_network.service.MentorshipSessionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,10 @@ public class MentorshipSessionController {
         return mentorshipSessionService.updateMentorshipSession(id, mentorshipSession);
     }
 
+    @PutMapping("/{id}/status")
+    public MentorshipSession updateMentorshipSessionStatus(@PathVariable Long id, @RequestBody SessionStatus status) {
+        return mentorshipSessionService.updateMentorshipSessionStatus(id, status);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteMentorshipSession(@PathVariable Long id) {

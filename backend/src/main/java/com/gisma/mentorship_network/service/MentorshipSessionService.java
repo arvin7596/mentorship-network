@@ -31,28 +31,46 @@ public class MentorshipSessionService {
 
     public record MentorshipSessionRequest(
             @NotBlank(message = "Mentorship match is required")
-            Long mentorshipMatchId,
+            Long match_id,
 
             @NotBlank(message = "Scheduled date is required")
-            LocalDateTime scheduledDate
+            LocalDateTime scheduled_date
             ) {}
 
     public MentorshipSession createMentorshipSession(MentorshipSessionRequest request) {
         MentorshipSession newMentorshipSession = new MentorshipSession();
-        newMentorshipSession.setScheduledDate(request.scheduledDate);
-        newMentorshipSession.setMentorshipMatchId(request.mentorshipMatchId);
+        newMentorshipSession.setScheduledDate(request.scheduled_date);
+        newMentorshipSession.setMentorshipMatchId(request.match_id);
+        newMentorshipSession.setStatus(SessionStatus.PENDING);
+        newMentorshipSession.setCreatedAt(LocalDateTime.now());
         return mentorshipSessionRepository.save(newMentorshipSession);
     }
 
     public record UpdateMentorshipSessionRequest(
-            LocalDateTime scheduledDate, SessionStatus status, String mentorNotes
+            LocalDateTime scheduled_date, SessionStatus status, String note
     ) {}
 
     public MentorshipSession updateMentorshipSession(Long id, UpdateMentorshipSessionRequest request) {
         MentorshipSession existingSession = getMentorshipSessionById(id);
-        existingSession.setStatus(request.status);
-        existingSession.setScheduledDate(request.scheduledDate);
-        existingSession.setMentorNotes(request.mentorNotes);
+        
+        if (request.status != null) {
+            existingSession.setStatus(request.status);
+        }
+        
+        if (request.scheduled_date != null) {
+            existingSession.setScheduledDate(request.scheduled_date);
+        }
+        
+        if (request.note != null) {
+            existingSession.setMentorNotes(request.note);
+        }
+        
+        return mentorshipSessionRepository.save(existingSession);
+    }
+
+    public MentorshipSession updateMentorshipSessionStatus(Long id, SessionStatus status) {
+        MentorshipSession existingSession = getMentorshipSessionById(id);
+        existingSession.setStatus(status);
         return mentorshipSessionRepository.save(existingSession);
     }
 
