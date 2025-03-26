@@ -2,12 +2,7 @@ package com.gisma.mentorship_network.controller;
 
 import com.gisma.mentorship_network.model.Skill;
 import com.gisma.mentorship_network.service.SkillService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,9 +15,14 @@ public class SkillController {
         this.skillService = skillService;
     }
 
-    @GetMapping
+    @GetMapping("/{userId}")
     public List<Skill> getAllUserSkills(@PathVariable Long userId) {
         return skillService.getAllUserSkills(userId);
+    }
+
+    @GetMapping("/suggestions/{userId}")
+    public List<SkillService.SkillMentorSuggestion> getSuggestedMentorsForUserSkills(@PathVariable Long userId) {
+        return skillService.getSuggestedMentorsForUserSkills(userId);
     }
 
     @PostMapping
@@ -30,5 +30,13 @@ public class SkillController {
         return skillService.createUserSkill(request);
     }   
 
+    @PutMapping("/{id}")
+    public Skill updateSkill(@PathVariable Long id, @RequestBody SkillService.UpdateSkillRequest request) {
+        return skillService.updateSkill(id, request);
+    }
 
+    @DeleteMapping("/{id}") 
+    public void deleteSkill(@PathVariable Long id) {
+        skillService.deleteSkill(id);
+    }
 }
