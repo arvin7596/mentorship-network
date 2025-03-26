@@ -179,7 +179,7 @@
             "url": "http://localhost:8080/api/availabilities/1",
             "body": {
               "mode": "raw",
-              "raw": "[\n    {\n        \"weekday\": \"MONDAY\",\n        \"startTime\": \"10:00:00\",\n        \"endTime\": \"12:00:00\"\n    },\n    {\n        \"weekday\": \"WEDNESDAY\",\n        \"startTime\": \"14:00:00\",\n        \"endTime\": \"16:00:00\"\n    }\n]",
+              "raw": "[\n    {\n        \"weekday\": \"MONDAY\",\n        \"start_time\": \"10:00:00\",\n        \"end_time\": \"12:00:00\"\n    },\n    {\n        \"weekday\": \"WEDNESDAY\",\n        \"start_time\": \"14:00:00\",\n        \"end_time\": \"16:00:00\"\n    }\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -195,7 +195,7 @@
             "url": "http://localhost:8080/api/availabilities/1",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"weekday\": \"MONDAY\",\n    \"startTime\": \"11:00:00\",\n    \"endTime\": \"13:00:00\"\n}",
+              "raw": "{\n    \"weekday\": \"MONDAY\",\n    \"start_time\": \"11:00:00\",\n    \"end_time\": \"13:00:00\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

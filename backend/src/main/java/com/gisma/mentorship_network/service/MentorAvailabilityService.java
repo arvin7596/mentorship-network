@@ -73,11 +73,12 @@ public class MentorAvailabilityService {
     private void checkForTimeOverlap(AvailabilityRequest newRequest, MentorAvailability existing) {
         if (existing.getWeekday() == newRequest.weekday()) {
             if (isTimeOverlapping(
-                    newRequest.startTime(),
-                    newRequest.endTime(),
+                    newRequest.start_time,
+                    newRequest.end_time,
                     existing.getStartTime(),
                     existing.getEndTime())) {
-                throw new IllegalArgumentException(
+                throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
                     "New availability overlaps with existing slot on " +
                     existing.getWeekday() + " between " +
                     existing.getStartTime() + " and " +
@@ -94,10 +95,10 @@ public class MentorAvailabilityService {
 
     public record AvailabilityRequest(
         @NotBlank(message = "Start time is required")
-        LocalTime startTime,
+        LocalTime start_time,
 
         @NotBlank(message = "End time is required")
-        LocalTime endTime,
+        LocalTime end_time,
 
         @NotBlank(message = "Weekday is required")
         WeekDay weekday
@@ -116,8 +117,8 @@ public class MentorAvailabilityService {
         for (AvailabilityRequest availabilityRequest : request) {
             MentorAvailability availability = new MentorAvailability();
             availability.setMentorId(mentorId);
-            availability.setStartTime(availabilityRequest.startTime());
-            availability.setEndTime(availabilityRequest.endTime());
+            availability.setStartTime(availabilityRequest.start_time());
+            availability.setEndTime(availabilityRequest.end_time());
             availability.setWeekday(availabilityRequest.weekday());
             mentorAvailabilityRepository.save(availability);
         }
@@ -141,8 +142,8 @@ public class MentorAvailabilityService {
             checkForTimeOverlap(request, existing);
         }
 
-        existingAvailability.setStartTime(request.startTime);
-        existingAvailability.setEndTime(request.endTime);
+        existingAvailability.setStartTime(request.start_time);
+        existingAvailability.setEndTime(request.end_time);
         existingAvailability.setWeekday(request.weekday);
         return mentorAvailabilityRepository.save(existingAvailability);
     }
