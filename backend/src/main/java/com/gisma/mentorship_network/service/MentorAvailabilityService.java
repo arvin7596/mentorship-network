@@ -35,7 +35,7 @@ public class MentorAvailabilityService {
     ) {}
 
     // Convert MentorAvailability to AvailabilityDTO
-    AvailabilityDTO getAvailabilityDTO(MentorAvailability mentorAvailability) {
+    public AvailabilityDTO getAvailabilityDTO(MentorAvailability mentorAvailability) {
         return new AvailabilityDTO(mentorAvailability.getId(), mentorAvailability.getStartTime(), mentorAvailability.getEndTime(), mentorAvailability.getWeekday(), UserService.getUserDTO(mentorAvailability.getMentor()));
     }
 
