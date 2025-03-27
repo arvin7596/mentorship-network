@@ -10,19 +10,26 @@ public class MentorshipMatch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "mentor_id")
     private User mentor;
+
     @ManyToOne
     @JoinColumn(name = "mentee_id")
     private User mentee;
+
     private String topic;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private MatchStatus status;
+
     private int progress;
+
     @Column(name = "mentor_feedback")
     private String mentorFeedback;
+
     @Column(name = "mentee_feedback")
     private String menteeFeedback;
 

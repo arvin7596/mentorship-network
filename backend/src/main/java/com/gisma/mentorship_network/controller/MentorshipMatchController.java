@@ -4,6 +4,7 @@ import com.gisma.mentorship_network.model.MentorshipMatch;
 import com.gisma.mentorship_network.service.MentorshipMatchService;
 import com.gisma.mentorship_network.service.MentorshipMatchService.MentorshipMatchDTO;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -19,23 +20,23 @@ public class MentorshipMatchController {
     }
 
      @GetMapping
-     public List<MentorshipMatch> getAllMentorshipMatches() {
+     public List<MentorshipMatchDTO> getAllMentorshipMatches() {
          return mentorshipMatchService.getAllMentorshipMatches();
      }
 
      @GetMapping("/{id}")
-     public MentorshipMatch getMentorshipMatchById(@PathVariable Long id) {
+     public MentorshipMatchDTO getMentorshipMatchById(@PathVariable Long id) {
          return mentorshipMatchService.getMentorshipMatchById(id);
      }
 
      @PostMapping
-     public ResponseEntity<MentorshipMatchDTO> createMentorshipMatch(@RequestBody MentorshipMatchService.CreateMentorshipMatchRequest mentorshipMatch) {
+     public ResponseEntity<MentorshipMatchDTO> createMentorshipMatch(@Valid @RequestBody MentorshipMatchService.CreateMentorshipMatchRequest mentorshipMatch) {
         MentorshipMatchDTO createdMentorshipMatch = mentorshipMatchService.createMentorshipMatch(mentorshipMatch);
          return ResponseEntity.status(HttpStatus.CREATED).body(createdMentorshipMatch);
      }
 
      @PutMapping("/{id}")
-     public ResponseEntity<MentorshipMatchDTO> updateMentorshipMatch(@PathVariable Long id, @RequestBody MentorshipMatch mentorshipMatch) {
+     public ResponseEntity<MentorshipMatchDTO> updateMentorshipMatch(@PathVariable Long id, @Valid @RequestBody MentorshipMatchService.UpdateMentorshipMatchRequest mentorshipMatch) {
         MentorshipMatchDTO updatedMentorshipMatch = mentorshipMatchService.updateMentorshipMatch(id, mentorshipMatch);
          return ResponseEntity.ok(updatedMentorshipMatch);
      }

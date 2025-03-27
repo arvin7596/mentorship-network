@@ -43,7 +43,8 @@ mentor_id BIGINT,
  status ENUM('NEW', 'IN_PROGRESS','COMPLETED','CANCELED', 'ON_HOLD') DEFAULT 'NEW',
  progress INT CHECK (progress >= 0 AND progress <= 100) DEFAULT 0,
  mentor_feedback TEXT,
- mentee_feedback TEXT
+ mentee_feedback TEXT,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Mentorship_Sessions(

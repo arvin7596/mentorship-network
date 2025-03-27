@@ -427,7 +427,7 @@
             "url": "http://localhost:8080/api/mentorship-matches",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"mentorId\": 1,\n    \"menteeId\": 2,\n    \"skillId\": 1,\n    \"status\": \"PENDING\"\n}",
+              "raw": "{\n    \"mentor_id\": 1,\n    \"mentee_id\": 2,\n    \"topic\": \"Advanced Java Programming\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -443,7 +443,7 @@
             "url": "http://localhost:8080/api/mentorship-matches/1",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"mentorId\": 1,\n    \"menteeId\": 2,\n    \"skillId\": 1,\n    \"status\": \"ACCEPTED\"\n}",
+              "raw": "{\n    \"topic\": \"Updated topic\",\n    \"progress\": 25,\n    \"mentor_feedback\": \"That was an efficient session\",\n    \"status\": \"IN_PROGRESS\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

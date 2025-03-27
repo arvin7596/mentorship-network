@@ -2,12 +2,10 @@ package com.gisma.mentorship_network.service;
 
 import com.gisma.mentorship_network.model.MatchStatus;
 import com.gisma.mentorship_network.model.MentorshipMatch;
-import com.gisma.mentorship_network.model.User;
 import com.gisma.mentorship_network.model.UserDTO;
 import com.gisma.mentorship_network.repository.MentorshipMatchRepository;
 import com.gisma.mentorship_network.repository.UserRepository;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,78 +22,95 @@ public class MentorshipMatchService {
         this.userRepository = userRepository;
 
     }
-    public record MentorshipMatchDTO(
-        Long id, UserDTO mentor, UserDTO mentee, String topic, MatchStatus status, int progress, String mentorFeedback, String menteeFeedback
-        ){}
 
-    //  public List<MentorshipMatchDTO> getAllMentorshipMatches() {
-    //      List<MentorshipMatch> allMatches = mentorshipMatchRepository.findAll();
-    //      return new MentorshipMatchDTO()
-    //  }
-         public List<MentorshipMatch> getAllMentorshipMatches() {
-         return mentorshipMatchRepository.findAll();
+    public record MentorshipMatchDTO(
+            Long id,
+            UserDTO mentor,
+            UserDTO mentee,
+            String topic,
+            MatchStatus status,
+            int progress,
+            String mentorFeedback,
+            String menteeFeedback
+    ){}
+
+    public MentorshipMatchDTO getMentorshipMatchDTO(MentorshipMatch mentorshipMatch) {
+        return new MentorshipMatchDTO(mentorshipMatch.getId(), UserService.getUserDTO(mentorshipMatch.getMentor()), UserService.getUserDTO(mentorshipMatch.getMentee()), mentorshipMatch.getTopic(), mentorshipMatch.getStatus(), mentorshipMatch.getProgress(), mentorshipMatch.getMentorFeedback(), mentorshipMatch.getMenteeFeedback());
+    }
+
+    public List<MentorshipMatchDTO> getAllMentorshipMatches() {
+        return mentorshipMatchRepository.findAll().stream().map(this::getMentorshipMatchDTO).toList();
      }
 
-     public MentorshipMatch getMentorshipMatchById(Long id) {
+     public MentorshipMatchDTO getMentorshipMatchById(Long id) {
         if (!mentorshipMatchRepository.existsById(id)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "MentorshipMatch with ID " +  id + " not found.");
         }
-        return mentorshipMatchRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("MentorshipMatch not found with id: " + id));
+        return getMentorshipMatchDTO(mentorshipMatchRepository.findById(id).orElseThrow());
      }
 
      public record CreateMentorshipMatchRequest(
          @NotNull(message = "Mentor ID is required")
-         User mentor,
+         Long mentor_id,
          @NotNull(message = "Mentee ID is required")
-         User mentee,
+         Long mentee_id,
          @NotBlank(message = "Topic is required")
          String topic
-     ){
-     };
+     ) {};
 
      public MentorshipMatchDTO createMentorshipMatch(CreateMentorshipMatchRequest request) {
-         if (!userRepository.existsById(request.mentor.getId())) {
+         if (!userRepository.existsById(request.mentor_id)) {
              throw new ResponseStatusException(
-                     HttpStatus.NOT_FOUND, "Mentor with ID " +  request.mentor.getId() + " not found.");
+                     HttpStatus.NOT_FOUND, "Mentor with ID " +  request.mentor_id + " not found.");
          }
-         if (!userRepository.existsById(request.mentee.getId())) {
+         if (!userRepository.existsById(request.mentee_id)) {
              throw new ResponseStatusException(
-                     HttpStatus.NOT_FOUND, "Mentee with ID " +  request.mentee.getId() + " not found.");
+                     HttpStatus.NOT_FOUND, "Mentee with ID " +  request.mentee_id + " not found.");
          }
          MentorshipMatch mentorshipMatch = new MentorshipMatch();
-         mentorshipMatch.setMentor(request.mentor);
-         mentorshipMatch.setMentee(request.mentee);
+         mentorshipMatch.setMentor(userRepository.findById(request.mentor_id).orElseThrow());
+         mentorshipMatch.setMentee(userRepository.findById(request.mentee_id).orElseThrow());
          mentorshipMatch.setTopic(request.topic);
          mentorshipMatch.setStatus(MatchStatus.NEW);
          mentorshipMatch.setProgress(0);
-         mentorshipMatch.setMentorFeedback("");
-         mentorshipMatch.setMenteeFeedback("");
+
          MentorshipMatch createdMatch = mentorshipMatchRepository.save(mentorshipMatch);
-         UserDTO mentorDTO = new UserDTO(createdMatch.getMentor().getId(), createdMatch.getMentor().getFirst_name(), createdMatch.getMentor().getLast_name(), createdMatch.getMentor().getEmail());
-         UserDTO menteeDTO = new UserDTO(createdMatch.getMentee().getId(), createdMatch.getMentee().getFirst_name(), createdMatch.getMentee().getLast_name(), createdMatch.getMentee().getEmail());
-         return new MentorshipMatchDTO(createdMatch.getId(), mentorDTO, menteeDTO, createdMatch.getTopic(), createdMatch.getStatus(), createdMatch.getProgress(), createdMatch.getMentorFeedback(), createdMatch.getMenteeFeedback());
+         return getMentorshipMatchDTO(createdMatch);
      }
 
-     public MentorshipMatchDTO updateMentorshipMatch(Long id, MentorshipMatch mentorshipMatch) {
+     public record UpdateMentorshipMatchRequest(
+         @Size(min = 3, max = 100, message = "Topic must be between 3 and 50 characters")
+         String topic,
+         
+         MatchStatus status,
+         @Min(value = 0, message = "Progress must be at least 0")
+         @Max(value = 100, message = "Progress must be at most 100")
+         int progress,
+         String mentor_feedback,
+         String mentee_feedback
+     ) {};
+
+     public MentorshipMatchDTO updateMentorshipMatch(Long id, UpdateMentorshipMatchRequest mentorshipMatch) {
          if (!mentorshipMatchRepository.existsById(id)) {
-             throw new RuntimeException("MentorshipMatch not found with id: " + id);
+             throw new ResponseStatusException(
+                     HttpStatus.NOT_FOUND, "MentorshipMatch with ID " +  id + " not found.");
          }
-         MentorshipMatch existingMatch = getMentorshipMatchById(id);
-         Optional.ofNullable(mentorshipMatch.getStatus()).ifPresent(existingMatch::setStatus);
-         Optional.ofNullable(mentorshipMatch.getProgress()).ifPresent(existingMatch::setProgress);
-         Optional.ofNullable(mentorshipMatch.getMentorFeedback()).ifPresent(existingMatch::setMentorFeedback);
-         Optional.ofNullable(mentorshipMatch.getMenteeFeedback()).ifPresent(existingMatch::setMenteeFeedback);
-         mentorshipMatch.setId(id);
-         MentorshipMatch updatedMatch = mentorshipMatchRepository.save(mentorshipMatch);
-         UserDTO mentorDTO = new UserDTO(updatedMatch.getMentor().getId(), updatedMatch.getMentor().getFirst_name(), updatedMatch.getMentor().getLast_name(), updatedMatch.getMentor().getEmail());
-         UserDTO menteeDTO = new UserDTO(updatedMatch.getMentee().getId(), updatedMatch.getMentee().getFirst_name(), updatedMatch.getMentee().getLast_name(), updatedMatch.getMentee().getEmail());
-         return new MentorshipMatchDTO(updatedMatch.getId(), mentorDTO, menteeDTO, updatedMatch.getTopic(), updatedMatch.getStatus(), updatedMatch.getProgress(), updatedMatch.getMentorFeedback(), updatedMatch.getMenteeFeedback());
+         MentorshipMatch existingMatch = mentorshipMatchRepository.findById(id).orElseThrow();
+         Optional.ofNullable(mentorshipMatch.status).ifPresent(existingMatch::setStatus);
+         Optional.ofNullable(mentorshipMatch.progress).ifPresent(existingMatch::setProgress);
+         Optional.ofNullable(mentorshipMatch.mentor_feedback).ifPresent(existingMatch::setMentorFeedback);
+         Optional.ofNullable(mentorshipMatch.mentee_feedback).ifPresent(existingMatch::setMenteeFeedback);
+         MentorshipMatch updatedMatch = mentorshipMatchRepository.save(existingMatch);
+         return getMentorshipMatchDTO(updatedMatch);
      }
 
      public void deleteMentorshipMatch(Long id) {
-         mentorshipMatchRepository.deleteById(id);
+        if (!mentorshipMatchRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "MentorshipMatch with ID " +  id + " not found.");
+        }
+        mentorshipMatchRepository.deleteById(id);
      }
 
 }

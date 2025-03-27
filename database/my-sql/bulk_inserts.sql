@@ -25,7 +25,7 @@ INSERT INTO Mentor_Availabilities (mentor_id, weekday, start_time, end_time) VAL
 -- Insert Mentorship Matches
 INSERT INTO Mentorship_Matches (mentor_id, mentee_id, topic, status, progress, mentor_feedback, mentee_feedback) VALUES
 (1, 2, 'Java Programming', 'IN_PROGRESS', 40, 'Good understanding so far.', 'Learning a lot.'),
-(3, 5, 'Web Development', 'NEW', 0, NULL, NULL),
+(1, 5, 'Web Development', 'NEW', 0, NULL, NULL),
 (4, 2, 'Cloud Computing', 'COMPLETED', 100, 'Excellent progress!', 'Gained valuable knowledge.');
 
 -- Insert Mentorship Sessions
