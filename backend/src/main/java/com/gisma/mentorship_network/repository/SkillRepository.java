@@ -24,6 +24,6 @@ public interface SkillRepository
     @Query("SELECT new com.gisma.mentorship_network.service.SkillService$MentorDetail(u.id, u.first_name, u.last_name, u.email, u.country, u.city) " +
        "FROM User u JOIN Skill s ON u.id = s.userId " +
        "WHERE s.name = :skillName AND u.is_mentor = true")
-List<SkillService.MentorDetail> findMentorsWithSkill(@Param("skillName") String skillName);
+    List<SkillService.MentorDetail> findMentorsWithSkill(@Param("skillName") String skillName);
 
 }
