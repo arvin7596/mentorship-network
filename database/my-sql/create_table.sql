@@ -40,7 +40,7 @@ mentor_id BIGINT,
  mentee_id BIGINT,
  FOREIGN KEY (mentee_id) REFERENCES Users(id),
  topic VARCHAR(50),
- status ENUM('NEW', 'IN PROGRESS','COMPLETED','CANCELED', 'ON HOLD') DEFAULT 'NEW',
+ status ENUM('NEW', 'IN_PROGRESS','COMPLETED','CANCELED', 'ON_HOLD') DEFAULT 'NEW',
  progress INT CHECK (progress >= 0 AND progress <= 100) DEFAULT 0,
  mentor_feedback TEXT,
  mentee_feedback TEXT
@@ -61,7 +61,8 @@ id BIGINT PRIMARY KEY AUTO_INCREMENT,
 session_id BIGINT,
 FOREIGN KEY (session_id) REFERENCES Mentorship_Sessions(id),
 mentee_feedback TEXT,
-rate DECIMAL CHECK (rate >= 0 AND rate <= 10)
+rate DECIMAL CHECK (rate >= 0 AND rate <= 10),
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Posts(

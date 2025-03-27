@@ -23,7 +23,7 @@ SELECT mentorship_matches.mentor_id , mentor.first_name AS mentor_name , mentee.
 FROM mentorship_matches 
 JOIN users mentor ON mentorship_matches.mentor_id = mentor.id
 JOIN users mentee ON mentorship_matches.mentee_id = mentee.id
-WHERE mentorship_matches.status IN ('NEW','IN PROGRESS');   
+WHERE mentorship_matches.status IN ('NEW','IN_PROGRESS');   
 
 -- Retrieve All Sessions for a Specific Mentor
 SELECT mentorship_sessions.id, mentorship_sessions.status, mentorship_sessions.scheduled_date, mentorship_matches.topic, mentee.first_name AS mentee_name
