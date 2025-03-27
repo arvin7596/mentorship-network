@@ -214,30 +214,30 @@
       ]
     },
     {
-      "name": "Posts",
+      "name": "Mentorship Matches",
       "item": [
         {
-          "name": "Get All Posts",
+          "name": "Get All Matches",
           "request": {
             "method": "GET",
-            "url": "http://localhost:8080/api/posts"
+            "url": "http://localhost:8080/api/mentorship-matches"
           }
         },
         {
-          "name": "Get Post by ID",
+          "name": "Get Match by ID",
           "request": {
             "method": "GET",
-            "url": "http://localhost:8080/api/posts/1"
+            "url": "http://localhost:8080/api/mentorship-matches/1"
           }
         },
         {
-          "name": "Create Post",
+          "name": "Create Match",
           "request": {
             "method": "POST",
-            "url": "http://localhost:8080/api/posts",
+            "url": "http://localhost:8080/api/mentorship-matches",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"author_id\": 1,\n    \"title\": \"Sample Post\",\n    \"description\": \"This is a sample post content\"\n}",
+              "raw": "{\n    \"mentor_id\": 1,\n    \"mentee_id\": 2,\n    \"topic\": \"Advanced Java Programming\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -247,13 +247,13 @@
           }
         },
         {
-          "name": "Update Post",
+          "name": "Update Match",
           "request": {
             "method": "PUT",
-            "url": "http://localhost:8080/api/posts/1",
+            "url": "http://localhost:8080/api/mentorship-matches/1",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Updated Post\",\n    \"description\": \"This is updated content\"\n}",
+              "raw": "{\n    \"topic\": \"Updated topic\",\n    \"progress\": 25,\n    \"mentor_feedback\": \"That was an efficient session\",\n    \"status\": \"IN_PROGRESS\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -263,10 +263,10 @@
           }
         },
         {
-          "name": "Delete Post",
+          "name": "Delete Match",
           "request": {
             "method": "DELETE",
-            "url": "http://localhost:8080/api/posts/1"
+            "url": "http://localhost:8080/api/mentorship-matches/1"
           }
         }
       ]
@@ -404,30 +404,30 @@
       ]
     },
     {
-      "name": "Mentorship Matches",
+      "name": "Posts",
       "item": [
         {
-          "name": "Get All Matches",
+          "name": "Get All Posts",
           "request": {
             "method": "GET",
-            "url": "http://localhost:8080/api/mentorship-matches"
+            "url": "http://localhost:8080/api/posts"
           }
         },
         {
-          "name": "Get Match by ID",
+          "name": "Get Post by ID",
           "request": {
             "method": "GET",
-            "url": "http://localhost:8080/api/mentorship-matches/1"
+            "url": "http://localhost:8080/api/posts/1"
           }
         },
         {
-          "name": "Create Match",
+          "name": "Create Post",
           "request": {
             "method": "POST",
-            "url": "http://localhost:8080/api/mentorship-matches",
+            "url": "http://localhost:8080/api/posts",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"mentor_id\": 1,\n    \"mentee_id\": 2,\n    \"topic\": \"Advanced Java Programming\"\n}",
+              "raw": "{\n    \"author_id\": 1,\n    \"title\": \"Sample Post\",\n    \"description\": \"This is a sample post content\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -437,13 +437,13 @@
           }
         },
         {
-          "name": "Update Match",
+          "name": "Update Post",
           "request": {
             "method": "PUT",
-            "url": "http://localhost:8080/api/mentorship-matches/1",
+            "url": "http://localhost:8080/api/posts/1",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"topic\": \"Updated topic\",\n    \"progress\": 25,\n    \"mentor_feedback\": \"That was an efficient session\",\n    \"status\": \"IN_PROGRESS\"\n}",
+              "raw": "{\n    \"title\": \"Updated Post\",\n    \"description\": \"This is updated content\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -453,10 +453,10 @@
           }
         },
         {
-          "name": "Delete Match",
+          "name": "Delete Post",
           "request": {
             "method": "DELETE",
-            "url": "http://localhost:8080/api/mentorship-matches/1"
+            "url": "http://localhost:8080/api/posts/1"
           }
         }
       ]

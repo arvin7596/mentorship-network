@@ -1,6 +1,4 @@
 package com.gisma.mentorship_network.controller;
-
-import com.gisma.mentorship_network.model.MentorshipMatch;
 import com.gisma.mentorship_network.service.MentorshipMatchService;
 import com.gisma.mentorship_network.service.MentorshipMatchService.MentorshipMatchDTO;
 

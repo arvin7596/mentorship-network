@@ -1,6 +1,4 @@
 package com.gisma.mentorship_network.controller;
-
-import com.gisma.mentorship_network.model.MentorAvailability;
 import com.gisma.mentorship_network.model.WeekDay;
 import com.gisma.mentorship_network.service.MentorAvailabilityService;
 import org.springframework.web.bind.annotation.*;
