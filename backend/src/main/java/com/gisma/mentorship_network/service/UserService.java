@@ -1,6 +1,7 @@
 package com.gisma.mentorship_network.service;
 
 import com.gisma.mentorship_network.model.User;
+import com.gisma.mentorship_network.model.UserDTO;
 import com.gisma.mentorship_network.repository.UserRepository;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -46,14 +47,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public record UserDTO(
-        Long id,
-        String first_name,
-        String last_name,
-        String email,
-        String country,
-        String city
-    ) {}
     public record CreateUserRequest(
             @NotBlank(message = "First name is required")
             @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")

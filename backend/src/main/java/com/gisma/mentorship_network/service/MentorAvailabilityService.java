@@ -2,6 +2,7 @@ package com.gisma.mentorship_network.service;
 
 import com.gisma.mentorship_network.model.MentorAvailability;
 import com.gisma.mentorship_network.model.User;
+import com.gisma.mentorship_network.model.UserDTO;
 import com.gisma.mentorship_network.model.WeekDay;
 import com.gisma.mentorship_network.repository.MentorAvailabilityRepository;
 import com.gisma.mentorship_network.repository.UserRepository;
@@ -30,7 +31,7 @@ public class MentorAvailabilityService {
             LocalTime startTime,
             LocalTime endTime,
             WeekDay weekday,
-            UserService.UserDTO mentor
+            UserDTO mentor
     ) {}
 
     // Convert MentorAvailability to AvailabilityDTO

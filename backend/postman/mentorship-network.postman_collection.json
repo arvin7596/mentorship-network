@@ -237,7 +237,7 @@
             "url": "http://localhost:8080/api/posts",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"userId\": 1,\n    \"title\": \"Sample Post\",\n    \"content\": \"This is a sample post content\"\n}",
+              "raw": "{\n    \"author_id\": 1,\n    \"title\": \"Sample Post\",\n    \"description\": \"This is a sample post content\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -253,7 +253,7 @@
             "url": "http://localhost:8080/api/posts/1",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Updated Post\",\n    \"content\": \"This is updated content\"\n}",
+              "raw": "{\n    \"title\": \"Updated Post\",\n    \"description\": \"This is updated content\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

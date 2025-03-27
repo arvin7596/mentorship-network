@@ -3,7 +3,6 @@ package com.gisma.mentorship_network.service;
 import org.springframework.stereotype.Service;
 import com.gisma.mentorship_network.repository.PostRepository;
 import com.gisma.mentorship_network.model.Post;
-import com.gisma.mentorship_network.model.PostDTO;
 import com.gisma.mentorship_network.model.User;
 import com.gisma.mentorship_network.model.UserDTO;
 
@@ -17,6 +16,8 @@ import com.gisma.mentorship_network.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
+import static com.gisma.mentorship_network.service.UserService.getUserDTO;
+
 @Service
 public class PostService {
     private final PostRepository postRepository;
@@ -27,18 +28,22 @@ public class PostService {
         this.userRepository = userRepository;
     }
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
+    public record PostDTO(Long id, String title, String description, UserDTO author) {}
+
+    PostDTO getPostDTO(Post post) {
+        return new PostDTO(post.getId(), post.getTitle(), post.getDescription(), getUserDTO(post.getAuthor()));
     }
 
-    public Post getPostById(Long id) {
+    public List<PostDTO> getAllPosts() {
+        return postRepository.findAll().stream().map(this::getPostDTO).toList();
+    }
+
+    public PostDTO getPostById(Long id) {
         if (!postRepository.existsById(id)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Post with ID " + id + " not found.");
         }
-        return postRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Post with ID " + id + " not found."));
+        return getPostDTO(postRepository.findById(id).orElseThrow());
     }
 
     public record CreatePostRequest(
@@ -48,6 +53,7 @@ public class PostService {
         String description,
         @NotNull(message = "User ID is required")
         Long author_id) {}
+
     public PostDTO createPost(CreatePostRequest request) {
         Post newPost = new Post();
         // if(request.title() == null || request.title().isEmpty() || request.title().length() < 2 || request.title().length() > 50) {
@@ -60,8 +66,7 @@ public class PostService {
             HttpStatus.NOT_FOUND, "User with ID " +  request.author_id + " not found."));
         newPost.setAuthor(author);
         Post savedPost = postRepository.save(newPost);
-        UserDTO authorDTO = new UserDTO(savedPost.getAuthor().getId(), savedPost.getAuthor().getFirst_name(), savedPost.getAuthor().getLast_name(), savedPost.getAuthor().getEmail());
-        return new PostDTO(savedPost.getId(), savedPost.getTitle(), savedPost.getDescription(), authorDTO);
+        return getPostDTO(savedPost);
     }
 
     public record UpdatePostRequest(
@@ -70,18 +75,23 @@ public class PostService {
         String title,
         
         String description) {}
-    public Post updatePost(Long id, UpdatePostRequest request) {
+    public PostDTO updatePost(Long id, UpdatePostRequest request) {
         if (!postRepository.existsById(id)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Post with ID " + id + " not found.");
         }
-        Post existingPost = getPostById(id);
+        Post existingPost = postRepository.findById(id).orElseThrow();
         Optional.ofNullable(request.title).ifPresent(existingPost::setTitle);
         Optional.ofNullable(request.description).ifPresent(existingPost::setDescription);
-        return postRepository.save(existingPost);
+        Post updatedPost = postRepository.save(existingPost);
+        return getPostDTO(updatedPost);
     }
 
     public void deletePost(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Post with ID " + id + " not found.");
+        }
         postRepository.deleteById(id);
     }
 }

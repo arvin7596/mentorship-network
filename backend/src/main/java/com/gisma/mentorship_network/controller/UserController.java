@@ -2,8 +2,10 @@ package com.gisma.mentorship_network.controller;
 
 import com.gisma.mentorship_network.model.Skill;
 import com.gisma.mentorship_network.model.User;
+import com.gisma.mentorship_network.model.UserDTO;
 import com.gisma.mentorship_network.service.SkillService;
 import com.gisma.mentorship_network.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,17 +25,17 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserService.UserDTO> getUsers() {
+    public List<UserDTO> getUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/mentors")
-    public List<UserService.UserDTO> getMentors() {
+    public List<UserDTO> getMentors() {
         return userService.getMentors();
     }
 
     @GetMapping("/mentees")
-    public List<UserService.UserDTO> getMentees() {
+    public List<UserDTO> getMentees() {
         return userService.getMentees();
     }
 
@@ -45,14 +47,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserService.UserDTO> createUser(@RequestBody UserService.CreateUserRequest request) {
-        UserService.UserDTO createdUser = userService.createUser(request);
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserService.CreateUserRequest request) {
+        UserDTO createdUser = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserService.UserDTO> updateUser(@PathVariable Long id, @RequestBody UserService.UpdateUserRequest request) {
-        UserService.UserDTO updatedUser = userService.updateUser(id, request);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserService.UpdateUserRequest request) {
+        UserDTO updatedUser = userService.updateUser(id, request);
         return ResponseEntity.ok(updatedUser);
     }
 
