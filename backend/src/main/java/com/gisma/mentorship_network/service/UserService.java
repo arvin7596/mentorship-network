@@ -22,12 +22,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserDTO getUserDTO(User user) {
+    public static UserDTO getUserDTO(User user) {
         return new UserDTO(user.getId(), user.getFirst_name(), user.getLast_name(), user.getEmail(), user.getCountry(), user.getCity());
     }
 
-    public List<UserDTO> getUsersDTOs(List<User> users) {
-        return users.stream().map(this::getUserDTO).toList();
+    public static List<UserDTO> getUsersDTOs(List<User> users) {
+        return users.stream().map(UserService::getUserDTO).toList();
     }
 
     public List<UserDTO> getAllUsers() {

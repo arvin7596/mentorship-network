@@ -13,8 +13,9 @@ public class MentorAvailability
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "mentor_id")  
-    private Long mentorId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "mentor_id")
+    private User mentor;
     
     @Column(name = "start_time")
     private LocalTime startTime;
@@ -28,9 +29,9 @@ public class MentorAvailability
 
     public MentorAvailability(){}
 
-    public MentorAvailability(Long id, Long mentor_id, LocalTime startTime, LocalTime endTime, WeekDay weekday) {
+    public MentorAvailability(Long id, User mentor, LocalTime startTime, LocalTime endTime, WeekDay weekday) {
         this.id = id;
-        this.mentorId = mentor_id;
+        this.mentor = mentor;
         this.startTime = startTime;
         this.endTime = endTime;
         this.weekday = weekday;
@@ -44,12 +45,12 @@ public class MentorAvailability
         this.id = id;
     }
 
-    public Long getMentorId() {
-        return mentorId;
+    public User getMentor() {
+        return mentor;
     }
 
-    public void setMentorId(Long mentorId) {
-        this.mentorId = mentorId;
+    public void setMentor(User mentor) {
+        this.mentor = mentor;
     }
 
     public LocalTime getStartTime() {
@@ -80,22 +81,22 @@ public class MentorAvailability
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         MentorAvailability that = (MentorAvailability) o;
-        return Objects.equals(id, that.id) && Objects.equals(mentorId, that.mentorId) && Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && weekday == that.weekday;
+        return Objects.equals(id, that.id) && Objects.equals(mentor, that.mentor) && Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && weekday == that.weekday;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, mentorId, startTime, endTime, weekday);
+        return Objects.hash(id, mentor, startTime, endTime, weekday);
     }
 
     @Override
     public String toString() {
         return "MentorAvailability{" +
-                "id=" + id +
-                ", mentor_id=" + mentorId +
-                ", startTime=" + startTime +
+                "weekday=" + weekday +
                 ", endTime=" + endTime +
-                ", weekday=" + weekday +
+                ", startTime=" + startTime +
+                ", mentor=" + mentor +
+                ", id=" + id +
                 '}';
     }
 }

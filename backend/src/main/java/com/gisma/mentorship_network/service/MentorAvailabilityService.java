@@ -1,8 +1,10 @@
 package com.gisma.mentorship_network.service;
 
 import com.gisma.mentorship_network.model.MentorAvailability;
+import com.gisma.mentorship_network.model.User;
 import com.gisma.mentorship_network.model.WeekDay;
 import com.gisma.mentorship_network.repository.MentorAvailabilityRepository;
+import com.gisma.mentorship_network.repository.UserRepository;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,21 +18,36 @@ import java.util.UUID;
 @Service
 public class MentorAvailabilityService {
     private final MentorAvailabilityRepository mentorAvailabilityRepository;
+    private final UserRepository userRepository;
 
-    public MentorAvailabilityService(MentorAvailabilityRepository mentorAvailabilityRepository) {
+    public MentorAvailabilityService(MentorAvailabilityRepository mentorAvailabilityRepository, UserRepository userRepository) {
         this.mentorAvailabilityRepository = mentorAvailabilityRepository;
+        this.userRepository = userRepository;
     }
 
-    public List<MentorAvailability> getAllAvailability() {
-        return mentorAvailabilityRepository.findAll();
+    public record AvailabilityDTO(
+            Long id,
+            LocalTime startTime,
+            LocalTime endTime,
+            WeekDay weekday,
+            UserService.UserDTO mentor
+    ) {}
+
+    // Convert MentorAvailability to AvailabilityDTO
+    AvailabilityDTO getAvailabilityDTO(MentorAvailability mentorAvailability) {
+        return new AvailabilityDTO(mentorAvailability.getId(), mentorAvailability.getStartTime(), mentorAvailability.getEndTime(), mentorAvailability.getWeekday(), UserService.getUserDTO(mentorAvailability.getMentor()));
     }
 
-    public List<MentorAvailability> getAvailabilityByMentorId(Long mentorId) {
-        return mentorAvailabilityRepository.findByMentorId(mentorId);
+    public List<AvailabilityDTO> getAllAvailability() {
+        return mentorAvailabilityRepository.findAll().stream().map(this::getAvailabilityDTO).toList();
     }
 
-    public List<MentorAvailability> getAvailabilityByWeekday(WeekDay weekday) {
-        return mentorAvailabilityRepository.findByWeekday(weekday);
+    public List<AvailabilityDTO> getAvailabilityByMentorId(Long mentorId) {
+        return mentorAvailabilityRepository.findByMentorId(mentorId).stream().map(this::getAvailabilityDTO).toList();
+    }
+
+    public List<AvailabilityDTO> getAvailabilityByWeekday(WeekDay weekday) {
+        return mentorAvailabilityRepository.findByWeekday(weekday).stream().map(this::getAvailabilityDTO).toList();
     }
 
     // TimeSlot class to represent a time slot with a unique identifier, weekday, start time, and end time
@@ -104,7 +121,7 @@ public class MentorAvailabilityService {
         WeekDay weekday
         ) {}
 
-    public List<MentorAvailability> createAvailabilities(List<AvailabilityRequest> request, Long mentorId) {
+    public List<AvailabilityDTO> createAvailabilities(List<AvailabilityRequest> request, Long mentorId) {
         // Get existing availabilities for this mentor
         List<MentorAvailability> existingAvailabilities = mentorAvailabilityRepository.findByMentorId(mentorId);
         // Check for possible time overlaps
@@ -116,23 +133,28 @@ public class MentorAvailabilityService {
 
         for (AvailabilityRequest availabilityRequest : request) {
             MentorAvailability availability = new MentorAvailability();
-            availability.setMentorId(mentorId);
+            User mentor = userRepository.findById(mentorId)
+                    .orElseThrow(() -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND, "Mentor with ID " + mentorId + " not found"));
+            availability.setMentor(mentor);
             availability.setStartTime(availabilityRequest.start_time());
             availability.setEndTime(availabilityRequest.end_time());
             availability.setWeekday(availabilityRequest.weekday());
             mentorAvailabilityRepository.save(availability);
         }
-        return mentorAvailabilityRepository.findByMentorId(mentorId);
+        List<MentorAvailability> mentorAvailabilities = mentorAvailabilityRepository.findByMentorId(mentorId);
+
+        return mentorAvailabilities.stream().map(this::getAvailabilityDTO).toList();
     }
 
 
-    public MentorAvailability updateAvailability(Long id, AvailabilityRequest request) {
+    public AvailabilityDTO updateAvailability(Long id, AvailabilityRequest request) {
         MentorAvailability existingAvailability = mentorAvailabilityRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Availability not found"));
 
         // Get existing availabilities for this mentor
-        List<MentorAvailability> existingAvailabilities = mentorAvailabilityRepository.findByMentorId(existingAvailability.getMentorId());
+        List<MentorAvailability> existingAvailabilities = mentorAvailabilityRepository.findByMentorId(existingAvailability.getMentor().getId());
 
         for (MentorAvailability existing : existingAvailabilities) {
             // Skip checking against the record being updated
@@ -145,7 +167,8 @@ public class MentorAvailabilityService {
         existingAvailability.setStartTime(request.start_time);
         existingAvailability.setEndTime(request.end_time);
         existingAvailability.setWeekday(request.weekday);
-        return mentorAvailabilityRepository.save(existingAvailability);
+        MentorAvailability updatedAvailability = mentorAvailabilityRepository.save(existingAvailability);
+        return getAvailabilityDTO(updatedAvailability);
     }
 
     public void deleteAvailability(Long id) {

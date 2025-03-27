@@ -16,17 +16,17 @@ public class MentorAvailabilityController {
     }
 
     @GetMapping
-    public List<MentorAvailability> getAvailability() {
+    public List<MentorAvailabilityService.AvailabilityDTO> getAvailability() {
         return mentorAvailabilityService.getAllAvailability();
     }
 
     @GetMapping("/{mentorId}")
-    public List<MentorAvailability> getAvailabilityByMentorId(@PathVariable Long mentorId) {
+    public List<MentorAvailabilityService.AvailabilityDTO> getAvailabilityByMentorId(@PathVariable Long mentorId) {
         return mentorAvailabilityService.getAvailabilityByMentorId(mentorId);
     }
 
     @GetMapping("/weekday/{weekday}")
-    public List<MentorAvailability> getAvailabilityByWeekday(@PathVariable WeekDay weekday) {
+    public List<MentorAvailabilityService.AvailabilityDTO> getAvailabilityByWeekday(@PathVariable WeekDay weekday) {
         return mentorAvailabilityService.getAvailabilityByWeekday(weekday);
     }
 
@@ -36,12 +36,12 @@ public class MentorAvailabilityController {
     }
 
     @PostMapping("/{mentorId}")
-    public List<MentorAvailability> createAvailability(@RequestBody List<MentorAvailabilityService.AvailabilityRequest> request, @PathVariable Long mentorId) {
+    public List<MentorAvailabilityService.AvailabilityDTO> createAvailability(@RequestBody List<MentorAvailabilityService.AvailabilityRequest> request, @PathVariable Long mentorId) {
         return mentorAvailabilityService.createAvailabilities(request, mentorId);
     }
 
     @PutMapping("/{id}")
-    public MentorAvailability updateAvailability(@PathVariable Long id, @RequestBody MentorAvailabilityService.AvailabilityRequest availability) {
+    public MentorAvailabilityService.AvailabilityDTO updateAvailability(@PathVariable Long id, @RequestBody MentorAvailabilityService.AvailabilityRequest availability) {
         return mentorAvailabilityService.updateAvailability(id, availability);
     }
 
