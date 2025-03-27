@@ -65,16 +65,16 @@ INSERT INTO Mentorship_Sessions (mentorship_match_id, status, scheduled_date) VA
 
 -- Session_Feedbacks table
 INSERT INTO Session_Feedbacks (session_id, mentee_feedback, rate) VALUES
-(1, 'Great session, learned a lot!', 9.5),
-(2, 'Very helpful mentor, clear explanations', 9.0),
-(3, 'Good introduction to the topic', 8.5),
-(4, 'Excellent practical examples', 9.8),
-(5, 'Very knowledgeable mentor', 9.2),
-(6, 'Helped me understand complex concepts', 8.8),
-(7, 'Great practical exercises', 9.3),
-(8, 'Very patient and thorough explanation', 9.0),
-(9, 'Excellent session overall', 9.5),
-(10, 'Very informative and helpful', 8.7);
+(1, 'Great session, learned a lot!', 9),
+(2, 'Very helpful mentor, clear explanations', 9),
+(3, 'Good introduction to the topic', 8),
+(4, 'Excellent practical examples', 9),
+(5, 'Very knowledgeable mentor', 9),
+(6, 'Helped me understand complex concepts', 8),
+(7, 'Great practical exercises', 9),
+(8, 'Very patient and thorough explanation', 9),
+(9, 'Excellent session overall', 9),
+(10, 'Very informative and helpful', 8);
 
 -- Posts table
 INSERT INTO Posts (title, description, author_id) VALUES

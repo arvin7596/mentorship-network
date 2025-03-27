@@ -42,6 +42,14 @@ GROUP BY mentorship_matches.mentor_id , mentor.first_name
 ORDER BY mentor_rate DESC
 LIMIT 3;
 
+-- Show the complete detail for a session  
+SELECT mentorship_sessions.id, mentorship_sessions.status, mentorship_sessions.scheduled_date, mentorship_matches.topic, mentee.first_name AS mentee_name , mentor.first_name , session_feedbacks.mentee_feedback , session_feedbacks.rate
+FROM session_feedbacks
+JOIN mentorship_sessions ON session_feedbacks.session_id = mentorship_sessions.id 
+JOIN mentorship_matches ON mentorship_sessions.mentorship_match_id = mentorship_matches.id
+JOIN users mentee ON mentorship_matches.mentee_id = mentee.id  
+JOIN users mentor ON  mentorship_matches.mentor_id = mentor.id
+WHERE session_feedbacks.session_id = 11;
 
 
 
