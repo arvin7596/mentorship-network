@@ -352,24 +352,24 @@
           "name": "Get All Feedbacks",
           "request": {
             "method": "GET",
-            "url": "http://localhost:8080/session-feedbacks"
+            "url": "http://localhost:8080/api/session-feedbacks"
           }
         },
         {
           "name": "Get Feedback by ID",
           "request": {
             "method": "GET",
-            "url": "http://localhost:8080/session-feedbacks/1"
+            "url": "http://localhost:8080/api/session-feedbacks/1"
           }
         },
         {
           "name": "Create Feedback",
           "request": {
             "method": "POST",
-            "url": "http://localhost:8080/session-feedbacks",
+            "url": "http://localhost:8080/api/session-feedbacks",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"sessionId\": 1,\n    \"rating\": 5,\n    \"comment\": \"Great session!\",\n    \"fromUserId\": 1,\n    \"toUserId\": 2\n}",
+              "raw": "{\n    \"session_id\": 1,\n    \"rate\": 5,\n    \"mentee_feedback\": \"Great session!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -382,10 +382,10 @@
           "name": "Update Feedback",
           "request": {
             "method": "PUT",
-            "url": "http://localhost:8080/session-feedbacks/1",
+            "url": "http://localhost:8080/api/session-feedbacks/1",
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"rating\": 4,\n    \"comment\": \"Updated feedback comment\"\n}",
+              "raw": "{\n    \"rate\": 9,\n    \"mentee_feedback\": \"Updated feedback comment\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -398,7 +398,7 @@
           "name": "Delete Feedback",
           "request": {
             "method": "DELETE",
-            "url": "http://localhost:8080/session-feedbacks/1"
+            "url": "http://localhost:8080/api/session-feedbacks/1"
           }
         }
       ]

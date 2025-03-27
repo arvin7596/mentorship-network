@@ -32,7 +32,7 @@ public class MentorshipSessionService {
         LocalDateTime createdAt
     ) {}
 
-    public MentorshipSessionDTO getSessionDTO(MentorshipSession session) {
+    public static MentorshipSessionDTO getSessionDTO(MentorshipSession session) {
         return new MentorshipSessionDTO(
             session.getId(),
             getMentorshipMatchDTO(session.getMentorshipMatch()),
@@ -44,7 +44,7 @@ public class MentorshipSessionService {
     }
 
     public List<MentorshipSessionDTO> getAllMentorshipSessions() {
-        return mentorshipSessionRepository.findAll().stream().map(this::getSessionDTO).toList();
+        return mentorshipSessionRepository.findAll().stream().map(MentorshipSessionService::getSessionDTO).toList();
     }
 
     public MentorshipSessionDTO getMentorshipSessionById(Long id) {

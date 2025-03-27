@@ -2,13 +2,10 @@ package com.gisma.mentorship_network.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-
 import jakarta.persistence.*;
 
-
-
 @Entity
-@Table(name = "session_feedbacks")
+@Table(name = "Session_Feedbacks")
 public class SessionFeedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +13,7 @@ public class SessionFeedback {
 
     @ManyToOne
     @JoinColumn(name = "session_id")
-    private MentorshipSession sessionId;
+    private MentorshipSession session;
 
     @Column(name = "mentee_feedback")
     private String menteeFeedback;
@@ -30,9 +27,9 @@ public class SessionFeedback {
     public SessionFeedback() {
     }
 
-    public SessionFeedback(Long id, MentorshipSession sessionId, String menteeFeedback, double rate, LocalDateTime createdAt) {
+    public SessionFeedback(Long id, MentorshipSession session, String menteeFeedback, double rate, LocalDateTime createdAt) {
         this.id = id;
-        this.sessionId = sessionId;
+        this.session = session;
         this.menteeFeedback = menteeFeedback;
         this.rate = rate;
         this.createdAt = createdAt;
@@ -46,12 +43,12 @@ public class SessionFeedback {
         this.id = id;
     }
 
-    public MentorshipSession getSessionId() {
-        return sessionId;
+    public MentorshipSession getSession() {
+        return session;
     }
 
-    public void setSessionId(MentorshipSession sessionId) {
-        this.sessionId = sessionId;
+    public void setSession(MentorshipSession session) {
+        this.session = session;
     }
 
     public String getMenteeFeedback() {
@@ -82,19 +79,19 @@ public class SessionFeedback {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         SessionFeedback that = (SessionFeedback) o;
-        return Double.compare(rate, that.rate) == 0 && Objects.equals(id, that.id) && Objects.equals(sessionId, that.sessionId) && Objects.equals(menteeFeedback, that.menteeFeedback) && Objects.equals(createdAt, that.createdAt);
+        return Double.compare(rate, that.rate) == 0 && Objects.equals(id, that.id) && Objects.equals(session, that.session) && Objects.equals(menteeFeedback, that.menteeFeedback) && Objects.equals(createdAt, that.createdAt);
     }
 
     @Override
-    public int hashCode() { 
-        return Objects.hash(id, sessionId, menteeFeedback, rate, createdAt);
+    public int hashCode() {
+        return Objects.hash(id, session, menteeFeedback, rate, createdAt);
     }
 
     @Override
     public String toString() {
         return "SessionFeedback{" +
                 "id=" + id +
-                ", sessionId=" + sessionId +
+                ", session=" + session +
                 ", menteeFeedback='" + menteeFeedback + '\'' +
                 ", rate=" + rate +
                 ", createdAt=" + createdAt +

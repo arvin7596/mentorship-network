@@ -2,11 +2,11 @@ package com.gisma.mentorship_network.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.gisma.mentorship_network.model.SessionFeedback;
 import com.gisma.mentorship_network.service.SessionFeedbackService;
 
 @RestController
@@ -20,23 +20,24 @@ public class SessionFeedbackController {
     }
     
     @GetMapping   
-    public List<SessionFeedback> getAllSessionFeedbacks() {
+    public List<SessionFeedbackService.SessionFeedbackDTO> getAllSessionFeedbacks() {
         return sessionFeedbackService.getAllSessionFeedbacks();
     }
 
     @GetMapping("/{id}")
-    public SessionFeedback getSessionFeedbackById(@PathVariable Long id) {
+    public SessionFeedbackService.SessionFeedbackDTO getSessionFeedbackById(@PathVariable Long id) {
         return sessionFeedbackService.getSessionFeedbackById(id);
     }
 
     @PostMapping
-    public ResponseEntity<SessionFeedback> createSessionFeedback(@RequestBody SessionFeedbackService.CreateSessionFeedbackRequest request) {
-        SessionFeedback createdFeedback = sessionFeedbackService.createSessionFeedback(request);
+    public ResponseEntity<SessionFeedbackService.SessionFeedbackDTO> createSessionFeedback(@Valid @RequestBody SessionFeedbackService.CreateSessionFeedbackRequest request) {
+        SessionFeedbackService.SessionFeedbackDTO createdFeedback = sessionFeedbackService.createSessionFeedback(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFeedback);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<SessionFeedback>  updateSessionFeedback(@PathVariable Long id, @RequestBody SessionFeedbackService.UpdateSessionFeedbackRequest request) {
-        SessionFeedback updatedFeedback = sessionFeedbackService.updateSessionFeedback(id, request);
+    public ResponseEntity<SessionFeedbackService.SessionFeedbackDTO>  updateSessionFeedback(@PathVariable Long id, @Valid @RequestBody SessionFeedbackService.UpdateSessionFeedbackRequest request) {
+        SessionFeedbackService.SessionFeedbackDTO updatedFeedback = sessionFeedbackService.updateSessionFeedback(id, request);
         return ResponseEntity.ok(updatedFeedback);
     }
 
