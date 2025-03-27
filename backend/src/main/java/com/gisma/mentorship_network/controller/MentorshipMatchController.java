@@ -27,6 +27,11 @@ public class MentorshipMatchController {
          return mentorshipMatchService.getMentorshipMatchById(id);
      }
 
+     @GetMapping("/mentor/{mentorId}")
+     public List<MentorshipMatchDTO> getMentorshipMatchesByMentorId(@PathVariable Long mentorId) {
+         return mentorshipMatchService.getMentorshipMatchesByMentorId(mentorId);
+     }
+
      @PostMapping
      public ResponseEntity<MentorshipMatchDTO> createMentorshipMatch(@Valid @RequestBody MentorshipMatchService.CreateMentorshipMatchRequest mentorshipMatch) {
         MentorshipMatchDTO createdMentorshipMatch = mentorshipMatchService.createMentorshipMatch(mentorshipMatch);

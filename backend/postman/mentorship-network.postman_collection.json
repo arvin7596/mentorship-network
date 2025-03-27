@@ -231,6 +231,13 @@
           }
         },
         {
+          "name": "Get Matches by Mentor ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/mentorship-matches/mentor/1"
+          }
+        },
+        {
           "name": "Create Match",
           "request": {
             "method": "POST",

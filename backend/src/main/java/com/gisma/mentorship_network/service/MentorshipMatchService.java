@@ -50,6 +50,10 @@ public class MentorshipMatchService {
         return getMentorshipMatchDTO(mentorshipMatchRepository.findById(id).orElseThrow());
      }
 
+     public List<MentorshipMatchDTO> getMentorshipMatchesByMentorId(Long mentorId) {
+        return mentorshipMatchRepository.findByMentorId(mentorId).stream().map(MentorshipMatchService::getMentorshipMatchDTO).toList();
+     }
+
      public record CreateMentorshipMatchRequest(
          @NotNull(message = "Mentor ID is required")
          Long mentor_id,
