@@ -2,6 +2,7 @@ package com.gisma.mentorship_network.controller;
 
 import com.gisma.mentorship_network.model.MentorshipMatch;
 import com.gisma.mentorship_network.service.MentorshipMatchService;
+import com.gisma.mentorship_network.service.MentorshipMatchService.MentorshipMatchDTO;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +29,14 @@ public class MentorshipMatchController {
      }
 
      @PostMapping
-     public ResponseEntity<MentorshipMatch> createMentorshipMatch(@RequestBody MentorshipMatchService.CreateMentorshipMatchRequest mentorshipMatch) {
-         MentorshipMatch createdMentorshipMatch = mentorshipMatchService.createMentorshipMatch(mentorshipMatch);
+     public ResponseEntity<MentorshipMatchDTO> createMentorshipMatch(@RequestBody MentorshipMatchService.CreateMentorshipMatchRequest mentorshipMatch) {
+        MentorshipMatchDTO createdMentorshipMatch = mentorshipMatchService.createMentorshipMatch(mentorshipMatch);
          return ResponseEntity.status(HttpStatus.CREATED).body(createdMentorshipMatch);
      }
 
      @PutMapping("/{id}")
-     public ResponseEntity<MentorshipMatch> updateMentorshipMatch(@PathVariable Long id, @RequestBody MentorshipMatch mentorshipMatch) {
-         MentorshipMatch updatedMentorshipMatch = mentorshipMatchService.updateMentorshipMatch(id, mentorshipMatch);
+     public ResponseEntity<MentorshipMatchDTO> updateMentorshipMatch(@PathVariable Long id, @RequestBody MentorshipMatch mentorshipMatch) {
+        MentorshipMatchDTO updatedMentorshipMatch = mentorshipMatchService.updateMentorshipMatch(id, mentorshipMatch);
          return ResponseEntity.ok(updatedMentorshipMatch);
      }
     
