@@ -3,6 +3,7 @@ package com.gisma.mentorship_network.service;
 import com.gisma.mentorship_network.model.MatchStatus;
 import com.gisma.mentorship_network.model.MentorshipMatch;
 import com.gisma.mentorship_network.model.User;
+import com.gisma.mentorship_network.model.UserDTO;
 import com.gisma.mentorship_network.repository.MentorshipMatchRepository;
 import com.gisma.mentorship_network.repository.UserRepository;
 import jakarta.validation.constraints.NotBlank;
@@ -23,8 +24,15 @@ public class MentorshipMatchService {
         this.userRepository = userRepository;
 
     }
+    public record MentorshipMatchDTO(
+        Long id, UserDTO mentor, UserDTO mentee, String topic, MatchStatus status, int progress, String mentorFeedback, String menteeFeedback
+        ){}
 
-     public List<MentorshipMatch> getAllMentorshipMatches() {
+    //  public List<MentorshipMatchDTO> getAllMentorshipMatches() {
+    //      List<MentorshipMatch> allMatches = mentorshipMatchRepository.findAll();
+    //      return new MentorshipMatchDTO()
+    //  }
+         public List<MentorshipMatch> getAllMentorshipMatches() {
          return mentorshipMatchRepository.findAll();
      }
 
@@ -46,8 +54,8 @@ public class MentorshipMatchService {
          String topic
      ){
      };
-     public MentorshipMatch createMentorshipMatch(CreateMentorshipMatchRequest request) {
 
+     public MentorshipMatchDTO createMentorshipMatch(CreateMentorshipMatchRequest request) {
          if (!userRepository.existsById(request.mentor.getId())) {
              throw new ResponseStatusException(
                      HttpStatus.NOT_FOUND, "Mentor with ID " +  request.mentor.getId() + " not found.");
@@ -64,10 +72,13 @@ public class MentorshipMatchService {
          mentorshipMatch.setProgress(0);
          mentorshipMatch.setMentorFeedback("");
          mentorshipMatch.setMenteeFeedback("");
-         return mentorshipMatchRepository.save(mentorshipMatch);
+         MentorshipMatch createdMatch = mentorshipMatchRepository.save(mentorshipMatch);
+         UserDTO mentorDTO = new UserDTO(createdMatch.getMentor().getId(), createdMatch.getMentor().getFirst_name(), createdMatch.getMentor().getLast_name(), createdMatch.getMentor().getEmail());
+         UserDTO menteeDTO = new UserDTO(createdMatch.getMentee().getId(), createdMatch.getMentee().getFirst_name(), createdMatch.getMentee().getLast_name(), createdMatch.getMentee().getEmail());
+         return new MentorshipMatchDTO(createdMatch.getId(), mentorDTO, menteeDTO, createdMatch.getTopic(), createdMatch.getStatus(), createdMatch.getProgress(), createdMatch.getMentorFeedback(), createdMatch.getMenteeFeedback());
      }
 
-     public MentorshipMatch updateMentorshipMatch(Long id, MentorshipMatch mentorshipMatch) {
+     public MentorshipMatchDTO updateMentorshipMatch(Long id, MentorshipMatch mentorshipMatch) {
          if (!mentorshipMatchRepository.existsById(id)) {
              throw new RuntimeException("MentorshipMatch not found with id: " + id);
          }
@@ -77,7 +88,10 @@ public class MentorshipMatchService {
          Optional.ofNullable(mentorshipMatch.getMentorFeedback()).ifPresent(existingMatch::setMentorFeedback);
          Optional.ofNullable(mentorshipMatch.getMenteeFeedback()).ifPresent(existingMatch::setMenteeFeedback);
          mentorshipMatch.setId(id);
-         return mentorshipMatchRepository.save(mentorshipMatch);
+         MentorshipMatch updatedMatch = mentorshipMatchRepository.save(mentorshipMatch);
+         UserDTO mentorDTO = new UserDTO(updatedMatch.getMentor().getId(), updatedMatch.getMentor().getFirst_name(), updatedMatch.getMentor().getLast_name(), updatedMatch.getMentor().getEmail());
+         UserDTO menteeDTO = new UserDTO(updatedMatch.getMentee().getId(), updatedMatch.getMentee().getFirst_name(), updatedMatch.getMentee().getLast_name(), updatedMatch.getMentee().getEmail());
+         return new MentorshipMatchDTO(updatedMatch.getId(), mentorDTO, menteeDTO, updatedMatch.getTopic(), updatedMatch.getStatus(), updatedMatch.getProgress(), updatedMatch.getMentorFeedback(), updatedMatch.getMenteeFeedback());
      }
 
      public void deleteMentorshipMatch(Long id) {

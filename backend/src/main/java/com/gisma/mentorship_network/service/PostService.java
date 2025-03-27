@@ -3,6 +3,10 @@ package com.gisma.mentorship_network.service;
 import org.springframework.stereotype.Service;
 import com.gisma.mentorship_network.repository.PostRepository;
 import com.gisma.mentorship_network.model.Post;
+import com.gisma.mentorship_network.model.PostDTO;
+import com.gisma.mentorship_network.model.User;
+import com.gisma.mentorship_network.model.UserDTO;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,6 +32,10 @@ public class PostService {
     }
 
     public Post getPostById(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Post with ID " + id + " not found.");
+        }
         return postRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Post with ID " + id + " not found."));
@@ -37,20 +45,23 @@ public class PostService {
         @NotBlank(message = "Title is required")
         @Size(min = 2, max = 50, message = "Title must be between 2 and 50 characters")
         String title,
-
         String description,
         @NotNull(message = "User ID is required")
         Long author_id) {}
-    public Post createPost(CreatePostRequest request) {
-        if (!userRepository.existsById(request.author_id())) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "User with ID " +  request.author_id + " not found.");
-        }
+    public PostDTO createPost(CreatePostRequest request) {
         Post newPost = new Post();
-        newPost.setTitle(request.title());
-        newPost.setDescription(request.description());
-        newPost.setAuthor_id(request.author_id());
-        return postRepository.save(newPost);
+        // if(request.title() == null || request.title().isEmpty() || request.title().length() < 2 || request.title().length() > 50) {
+        //     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title must be between 2 and 50 characters");
+        // }
+        newPost.setTitle(request.title);
+        Optional.ofNullable(request.description).ifPresent(newPost::setDescription);
+
+        User author = userRepository.findById(request.author_id).orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "User with ID " +  request.author_id + " not found."));
+        newPost.setAuthor(author);
+        Post savedPost = postRepository.save(newPost);
+        UserDTO authorDTO = new UserDTO(savedPost.getAuthor().getId(), savedPost.getAuthor().getFirst_name(), savedPost.getAuthor().getLast_name(), savedPost.getAuthor().getEmail());
+        return new PostDTO(savedPost.getId(), savedPost.getTitle(), savedPost.getDescription(), authorDTO);
     }
 
     public record UpdatePostRequest(

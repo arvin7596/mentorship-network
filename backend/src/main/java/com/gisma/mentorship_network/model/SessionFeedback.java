@@ -86,7 +86,7 @@ public class SessionFeedback {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() { 
         return Objects.hash(id, sessionId, menteeFeedback, rate, createdAt);
     }
 

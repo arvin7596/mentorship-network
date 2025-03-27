@@ -10,7 +10,7 @@ import com.gisma.mentorship_network.model.SessionFeedback;
 import com.gisma.mentorship_network.service.SessionFeedbackService;
 
 @RestController
-@RequestMapping("/session-feedbacks")
+@RequestMapping("/api/session-feedbacks")
 public class SessionFeedbackController {
 
     private final SessionFeedbackService sessionFeedbackService;
@@ -19,7 +19,7 @@ public class SessionFeedbackController {
         this.sessionFeedbackService = sessionFeedbackService;
     }
     
-    @GetMapping
+    @GetMapping   
     public List<SessionFeedback> getAllSessionFeedbacks() {
         return sessionFeedbackService.getAllSessionFeedbacks();
     }

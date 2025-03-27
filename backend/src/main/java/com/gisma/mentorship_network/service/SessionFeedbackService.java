@@ -1,6 +1,5 @@
 package com.gisma.mentorship_network.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -32,29 +31,29 @@ public class SessionFeedbackService {
     }
     public record CreateSessionFeedbackRequest(
         @NotNull(message = "Session ID is required")
-        MentorshipSession sessionId,
+        MentorshipSession session_id,   
         @NotBlank(message = "Mentee feedback is required")
-        String menteeFeedback,
+        String mentee_feedback,
         @NotNull(message = "Rate is required")  
         double rate
     ){};
     public SessionFeedback createSessionFeedback(CreateSessionFeedbackRequest request) {
         SessionFeedback newFeedback = new SessionFeedback();
-        newFeedback.setMenteeFeedback((request.menteeFeedback()));
-        newFeedback.setRate((request.rate()));
-        newFeedback.setSessionId((request.sessionId()));
+        newFeedback.setMenteeFeedback(request.mentee_feedback);
+        newFeedback.setRate(request.rate);
+        newFeedback.setSessionId(request.session_id);
         return sessionFeedbackRepository.save(newFeedback);
     }
     public record UpdateSessionFeedbackRequest(
         @NotBlank(message = "Mentee feedback is required")
-        String menteeFeedback,
+        String mentee_feedback,
         @NotNull(message = "Rate is required")
         double rate
     ){};
     public SessionFeedback updateSessionFeedback(Long id, UpdateSessionFeedbackRequest request) {
         SessionFeedback existingFeedback = getSessionFeedbackById(id);
-        existingFeedback.setMenteeFeedback(request.menteeFeedback());
-        existingFeedback.setRate(request.rate());
+        existingFeedback.setMenteeFeedback(request.mentee_feedback);
+        existingFeedback.setRate(request.rate);
         return sessionFeedbackRepository.save(existingFeedback);
     }   
     public void deleteSessionFeedback(Long id) {
