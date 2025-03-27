@@ -12,8 +12,9 @@ public class MentorshipSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "mentorship_match_id")
-    private Long mentorshipMatchId;
+    @ManyToOne
+    @JoinColumn(name = "mentorship_match_id")
+    private MentorshipMatch mentorshipMatch;
 
     @Column(name = "scheduled_date")
     private LocalDateTime scheduledDate;
@@ -30,9 +31,9 @@ public class MentorshipSession {
 
     public MentorshipSession() {}
 
-    public MentorshipSession(Long id, Long mentorshipMatchId, LocalDateTime scheduledDate, String mentorNotes, SessionStatus status, LocalDateTime createdAt) {
+    public MentorshipSession(Long id, MentorshipMatch mentorshipMatch, LocalDateTime scheduledDate, String mentorNotes, SessionStatus status, LocalDateTime createdAt) {
         this.id = id;
-        this.mentorshipMatchId = mentorshipMatchId;
+        this.mentorshipMatch = mentorshipMatch;
         this.scheduledDate = scheduledDate;
         this.mentorNotes = mentorNotes;
         this.status = status;
@@ -47,12 +48,12 @@ public class MentorshipSession {
         this.id = id;
     }
 
-    public Long getMentorshipMatchId() {
-        return mentorshipMatchId;
+    public MentorshipMatch getMentorshipMatch() {
+        return mentorshipMatch;
     }
 
-    public void setMentorshipMatchId(Long mentorshipMatchId) {
-        this.mentorshipMatchId = mentorshipMatchId;
+    public void setMentorshipMatch(MentorshipMatch mentorshipMatch) {
+        this.mentorshipMatch = mentorshipMatch;
     }
 
     public LocalDateTime getScheduledDate() {
@@ -91,19 +92,19 @@ public class MentorshipSession {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         MentorshipSession that = (MentorshipSession) o;
-        return Objects.equals(id, that.id) && Objects.equals(mentorshipMatchId, that.mentorshipMatchId) && Objects.equals(scheduledDate, that.scheduledDate) && Objects.equals(mentorNotes, that.mentorNotes) && status == that.status && Objects.equals(createdAt, that.createdAt);
+        return Objects.equals(id, that.id) && Objects.equals(mentorshipMatch, that.mentorshipMatch) && Objects.equals(scheduledDate, that.scheduledDate) && Objects.equals(mentorNotes, that.mentorNotes) && status == that.status && Objects.equals(createdAt, that.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, mentorshipMatchId, scheduledDate, mentorNotes, status, createdAt);
+        return Objects.hash(id, mentorshipMatch, scheduledDate, mentorNotes, status, createdAt);
     }
 
     @Override
     public String toString() {
         return "MentorshipSession{" +
                 "id=" + id +
-                ", mentorshipMatchId=" + mentorshipMatchId +
+                ", mentorshipMatch=" + mentorshipMatch +
                 ", scheduledDate=" + scheduledDate +
                 ", mentorNotes='" + mentorNotes + '\'' +
                 ", status=" + status +

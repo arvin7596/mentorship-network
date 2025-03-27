@@ -34,12 +34,12 @@ public class MentorshipMatchService {
             String menteeFeedback
     ){}
 
-    public MentorshipMatchDTO getMentorshipMatchDTO(MentorshipMatch mentorshipMatch) {
+    public static MentorshipMatchDTO getMentorshipMatchDTO(MentorshipMatch mentorshipMatch) {
         return new MentorshipMatchDTO(mentorshipMatch.getId(), UserService.getUserDTO(mentorshipMatch.getMentor()), UserService.getUserDTO(mentorshipMatch.getMentee()), mentorshipMatch.getTopic(), mentorshipMatch.getStatus(), mentorshipMatch.getProgress(), mentorshipMatch.getMentorFeedback(), mentorshipMatch.getMenteeFeedback());
     }
 
     public List<MentorshipMatchDTO> getAllMentorshipMatches() {
-        return mentorshipMatchRepository.findAll().stream().map(this::getMentorshipMatchDTO).toList();
+        return mentorshipMatchRepository.findAll().stream().map(MentorshipMatchService::getMentorshipMatchDTO).toList();
      }
 
      public MentorshipMatchDTO getMentorshipMatchById(Long id) {
